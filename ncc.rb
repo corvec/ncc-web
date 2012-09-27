@@ -1,0 +1,339 @@
+require 'yaml'
+
+# Used to generate ncc.html page, given YAML configuration.
+
+def convert_to_js obj
+	if obj.is_a? Hash
+		return hash_to_js(obj)
+	elsif obj.is_a? Array
+		return array_to_js(obj)
+	elsif obj.is_a? String
+		return "\"#{obj}\""
+	elsif obj.is_a? Integer
+		return "#{obj}"
+	else
+		puts "convert_to_js(#{obj}) - Type not recognized"
+		return obj.to_s
+	end
+end
+
+def array_to_js(array)
+	val = "["
+	array.each_with_index do |obj, i|
+		val += convert_to_js(obj)
+		val += ", " if i < array.size
+	end
+	val += "]"
+
+	return val
+end
+
+def hash_to_js(hash)
+	output = "{"
+	hash.keys.each_with_index do |key, i|
+		output += "\"#{key}\" : "
+		output += convert_to_js(hash[key])
+		output += ", " if i < hash.size
+	end
+	output += "}"
+	return output
+end
+
+
+yaml_skills = {}
+File.open('ncc.yml') { |filedata| yaml_skills = YAML.load(filedata) }
+
+# 1. import skill file into skills object
+# 2. build javascript hash of skills object
+# 3. same thing with races
+
+page = <<-EORS
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="ncc.css" />
+<link rel="stylesheet" type="text/css" href="lib/ui-lightness/jquery-ui-1.8.22.custom.css" />
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes" /><!-- hide top bar in mobile safari-->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<title>NCC</title>
+<!--
+NERO Character Creator
+Web Edition
+Copyright 2012 by Corey T Kump
+
+Contact me at: 
+firstname dot lastname @ gmail dot com
+-->
+
+<script type="text/javascript" src="lib/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="lib/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="lib/noty/jquery.noty.js"></script>
+<script type="text/javascript" src="lib/noty/layouts/top.js"></script>
+<script type="text/javascript" src="lib/noty/layouts/topRight.js"></script>
+<script type="text/javascript" src="lib/noty/themes/default.js"></script>
+<script type="text/javascript" src="ncc.js"></script>
+<script type="text/javascript">
+	var hash = 
+EORS
+
+	page += convert_to_js(yaml_skills)
+
+page += <<-EORS
+;
+
+$(function() {
+	window.current_school = "primary";
+	document.getElementById("spent_build").value = 0;
+	window.spell_add_mode = true;
+	window.grab_keys = true;
+	if(!navigator.userAgent.match(/iPhone/i) &&
+		!navigator.userAgent.match(/iPad/i))
+	{
+		$(document).keypress(function(e){ interpret_keycode(e); } );
+	} else if (navigator.userAgent.match(/iPhone/i)) {
+		$('h2').hide();
+	}
+});
+
+</script>
+
+</head>
+
+<body>
+<div id="wrap">
+<div id="main">
+
+<div class="header">
+	<h1 class="title">NERO Character Creator</h1>
+</div>
+
+<div class="content">
+<h2 class="title">Character Info</h2>
+
+<div id="character_info" class="box-white">
+	<p>
+		<label for="character_class">Class</label>
+		<select id="character_class" onchange="change_class(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
+			<option value="Fighter">Fighter</option>
+			<option value="Rogue">Rogue</option>
+			<option value="Scholar">Scholar</option>
+			<option value="Templar">Templar</option>
+		</select>
+	</p>
+	<p>
+		<label for="race">Race</label>
+			<select id="race" onchange="change_race(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
+EORS
+
+yaml_skills["Races"].keys.each do |race|
+	if yaml_skills["Races"][race]["Default"]
+		page += "<option selected='true'>#{race}</option>\n"
+	else
+		page += "<option>#{race}</option>\n"
+	end
+end
+
+page += <<-EORS
+
+			</select>
+	</p>
+	<p>
+		<label for="spent_build">Build</label>
+		<input type="text" id="spent_build" value="0" readonly="readonly" />
+	</p>
+</div><!-- character_info -->
+
+<h2 class="title">Spells</h2>
+<table class="spell_tree">
+	<thead>
+	<tr></tr>
+	<tr>
+		<th class="spell_school" rowspan="2" onclick="switch_schools()">
+			Primary
+		</th>
+		<th class="spell_level" onclick='del_spell("p_1")'>1</th>
+		<th class="spell_level" onclick='del_spell("p_2")'>2</th>
+		<th class="spell_level" onclick='del_spell("p_3")'>3</th>
+		<th class="spell_level" onclick='del_spell("p_4")'>4</th>
+		<th class="spell_level" onclick='del_spell("p_5")'>5</th>
+		<th class="spell_level" onclick='del_spell("p_6")'>6</th>
+		<th class="spell_level" onclick='del_spell("p_7")'>7</th>
+		<th class="spell_level" onclick='del_spell("p_8")'>8</th>
+		<th class="spell_level" onclick='del_spell("p_9")'>9</th>
+		<th class="spell_head">Cost</th>
+	</tr></thead>
+	<tbody>
+	<tr>
+		<td class="spell_school" onclick="switch_schools()" id="primary">Earth</td>
+		<td class="spell_slot" onclick='add_spell("p_1")'><span id="p_1">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_2")'><span id="p_2">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_3")'><span id="p_3">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_4")'><span id="p_4">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_5")'><span id="p_5">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_6")'><span id="p_6">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_7")'><span id="p_7">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_8")'><span id="p_8">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_9")'><span id="p_9">0</span></td>
+		<td class="spell_cost"><span id="p_cost">0</span></td>
+	</tr>
+	</tbody>
+</table>
+
+<table class="spell_tree">
+	<thead>
+	<tr>
+		<th class="spell_school" onclick="switch_schools()">Secondary</th>
+		<th class="spell_level" onclick='del_spell("s_1")'>1</th>
+		<th class="spell_level" onclick='del_spell("s_2")'>2</th>
+		<th class="spell_level" onclick='del_spell("s_3")'>3</th>
+		<th class="spell_level" onclick='del_spell("s_4")'>4</th>
+		<th class="spell_level" onclick='del_spell("s_5")'>5</th>
+		<th class="spell_level" onclick='del_spell("s_6")'>6</th>
+		<th class="spell_level" onclick='del_spell("s_7")'>7</th>
+		<th class="spell_level" onclick='del_spell("s_8")'>8</th>
+		<th class="spell_level" onclick='del_spell("s_9")'>9</th>
+		<th class="spell_head">Cost</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="spell_school" onclick="switch_schools()" id="secondary">Celestial</td>
+		<td class="spell_slot" onclick='add_spell("s_1")'><span id="s_1">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_2")'><span id="s_2">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_3")'><span id="s_3">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_4")'><span id="s_4">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_5")'><span id="s_5">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_6")'><span id="s_6">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_7")'><span id="s_7">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_8")'><span id="s_8">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_9")'><span id="s_9">0</span></td>
+		<td class="spell_cost"><span id="s_cost">0</span></td >
+	</tr>
+	</tbody>
+</table>
+
+<h2 class="title">Skills</h2>
+<div id="add_skills" class="box-white">
+	<form onsubmit="return add_selected_skill()">
+	<p id="add_skill_row">
+		<input type="number" id="skill_number" value="1" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
+		<select id="skill_to_add" onchange="update_skill_cost();" onfocus="window.grab_keys=false;" onblur="window.grab_keys=true;" onkeyup="if (event.keyCode == 13) document.getElementById('skill_add_btn').click();">
+EORS
+
+yaml_skills["Skills"].keys.each do |skill|
+	if yaml_skills["Skills"][skill].has_key?("Cost") or yaml_skills["Skills"][skill]["Racial"] == true
+		page += "<option>#{skill}</option>\n" 
+	end
+end
+
+page += <<-EORS
+
+		</select>
+
+	</p>
+	<p>
+		<input type="text" readonly="readonly" value="0" id="skill_cost" />
+		<input type="submit" value="Add Skill" id="skill_add_btn" />
+	</p>
+	</form>
+</div><!-- add_skills -->
+
+<table>
+	<thead><tr>
+		<th></th>
+		<th>Count</th>
+		<th>Skill Name</th>
+		<th>Build</th>
+	</tr></thead>
+	<tbody id="skill_table"></tbody>
+</table>
+
+EORS
+
+removed = <<-EORS
+<div class="dialog" id="class_list">
+	<ul>
+		<li onclick='set_class("Fighter")'>Fighter</li>
+		<li onclick='set_class("Rogue")'>Rogue</li>
+		<li onclick='set_class("Scholar")'>Scholar</li>
+		<li onclick='set_class("Templar")'>Templar</li>
+	</ul>
+</div><!-- class list -->
+
+<div class="dialog" id="race_list">
+	<ul>
+EORS
+
+yaml_skills["Races"].keys.each do |race|
+	removed += "\t\t<li onclick='set_race(\"#{race}\")'>#{race}</li>\n"
+end
+
+removed += <<-EORS
+	</ul>
+</div><!-- race_list -->
+EORS
+
+page += <<-EORS
+
+
+</div><!-- content -->
+</div><!-- main -->
+<div id="sidebar">
+<div class="header">
+<h1 class="title">Keyboard Mapping</h1>
+</div><!-- header -->
+<div class="content">
+<table>
+	<ul class="nav">
+		<li><a href='#' onclick='run_action("A")'>
+			<span class="ico msg" style="text-align: center;">A</span>
+			<span>Selects the "Add Skill" drop-down.</span>
+		</a></li>
+		<li><a>
+			<span class="ico msg" style="text-align: center;">1-9</span>
+			<span>Adds/removes a spell by level</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("=")'>
+			<span class="ico msg" style="text-align: center;">=</span>
+			<span>Toggles Spell Add Mode on/off</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("+")'>
+			<span class="ico msg" style="text-align: center;">+</span>
+			<span>Sets Spell Add Mode on</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("-")'>
+			<span class="ico msg" style="text-align: center;">-</span>
+			<span>Sets Spell Add Mode off</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("P")'>
+			<span class="ico msg" style="text-align: center;">P</span>
+			<span>Toggles the primary school</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("S")'>
+			<span class="ico msg" style="text-align: center;">S</span>
+			<span>Toggles the selected school</span>
+		</a></li>
+		
+	</ul>
+</table>
+<div class="box-white" id="credits">
+<p>This web app was developed by Corey Kump in 2012.
+It utilizes skills from the <a href="http://www.nerolarp.com" target="_nat">NERO LARP</a> game.
+Corey's home chapter is <a href="http://www.neroindy.com" target="_in">NERO Indiana</a>.
+</p>
+<p>A desktop version of this app is maintained on <a href="http://www.github.com/corvec/NERO-Character-Creator" target="_git">gitHub</a>.</p>
+</div><!--credits-->
+</div><!--content-->
+</div><!--sidebar-->
+
+</div><!-- wrap -->
+</body>
+</html>
+EORS
+
+File.open('index.html', 'w') { |file| file.write page }
