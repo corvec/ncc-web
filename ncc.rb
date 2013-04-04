@@ -70,7 +70,7 @@ Contact me at:
 firstname dot lastname @ gmail dot com
 -->
 
-<script type="text/javascript" src="lib/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="lib/jquery-ui-1.8.22.custom.min.js"></script>
 <script type="text/javascript" src="lib/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="lib/noty/layouts/top.js"></script>
