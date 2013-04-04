@@ -1,0 +1,6 @@
+[submodule "lib/noty"]
+	path = lib/noty
+	url = git@github.com:needim/noty.git
+[submodule "lib/jspdf"]
+	path = lib/jspdf
+	url = git@github.com:MrRio/jsPDF.git

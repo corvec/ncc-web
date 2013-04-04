@@ -69,6 +69,11 @@ color: #fff;border-radius: 5px;border: 1px solid #6d6d6d;font-size: 12px;left: 3
 #skill_to_add { width: 75%; margin: 0em !important; padding: 0em !important; text-align: left !important;}
 #skill_cost { width: 15% !important; float: left !important; text-align: center !important; }
 #skill_add_btn { width: 75% !important; }
+#print_btn { width: 40% !important; }
+#email_btn { width: 40% !important; }
+#print_btn_p { text-align: center !important; }
+#abilities_h { padding-left: 10px !important; }
+#abilities_body tr td { padding-left: 20px !important; }
 
 
 /* Links */

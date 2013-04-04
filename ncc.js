@@ -9,6 +9,11 @@
  * August 30, 2012
  */
 
+$(window).bind("load", function() {
+	update_abilities();
+	update_skill_cost();
+});
+
 var Notification = window.Notification = {};
 Notification.info = function(message, title) {
 	if (title != null) {
@@ -61,7 +66,7 @@ function interpret_keycode(event) {
 function run_action(key_code) {
 	switch(key_code) {
 		case '+': // +
-			Notification.info('',"Set Spell Add Mode on");
+			Notification.info("Set Spell Add Mode on");
 			spell_add_mode = true;
 			break;
 		case '-': // - 
@@ -153,6 +158,18 @@ function add_selected_skill() {
 	}
 	//$("#skill_to_add").attr("size",1);
 	return false; // so that the submit button doesn't reload the page
+}
+
+function add_skill_action(skill_name, skill_count) {
+	if (skill_count == -1) {
+		window.current_action = "Selling Back 1x " + skill_name;
+	} else if (skill_count == 1) {
+		window.current_action = "Buying 1x " + skill_name;
+	} else {
+		window.current_action = "Buying " + skill_name;
+	}
+	add_skill(skill_name, skill_count);
+	update_build_spent();
 }
 
 // Adds the passed skill. Called by add_prereq() and by add_selected_skill()
@@ -251,8 +268,8 @@ function add_skill_row(skill_name, skill_data, skill_count, cur_count, row, skil
 		c2.innerHTML = skill_name;
 		c1.innerHTML = 0;
 
-		c1.setAttribute("onclick","add_skill(\"" + skill_name + "\", -1); update_build_spent(); ");
-		c2.setAttribute("onclick","add_skill(\"" + skill_name + "\", 1); update_build_spent(); ");
+		c1.setAttribute("onclick","add_skill_action(\"" + skill_name + "\", -1); ");
+		c2.setAttribute("onclick","add_skill_action(\"" + skill_name + "\", 1); ");
 	}
 
 	new_count = cur_count + skill_count;
@@ -313,6 +330,7 @@ function switch_schools() {
 		document.getElementById("p_" + i).innerHTML = temp_s;
 	}
 	update_spelltree_cost();
+	update_skill_costs();
 }
 
 // Adds prereqs for a given skill with the passed number of purchases.
@@ -636,11 +654,33 @@ function set_class(character_class) {
 	$('#class_list').dialog('close');
 }
 
+function update_abilities() {
+	if (hash["Races"][document.getElementById("race").value]["Super Race"]) {
+		$('#trait_p').show();
+	} else {
+		$('#trait_p').hide();
+	}
+
+	var abilities = hash["Races"][get_character_race()]["Abilities"];
+	if (!abilities) {
+		$('#abilities').hide();
+		return false;
+	}
+
+	$('#abilities').show();
+	for (var i = 0; i < abilities.length; i++) {
+		$('#ability_' + i).html(abilities[i]);
+	}
+}
+
 // Run after a race change
 function change_race() {
 	window.current_action = "Changing Race";
 	update_skill_costs();
 	update_spelltree_cost();
+
+	update_abilities();
+
 	if (ary_contains(
 				hash["Races"][get_character_race()]["Prohibited Classes"],
 				get_character_class()))
@@ -652,6 +692,16 @@ function change_race() {
 			window.current_action);
 	}
 }
+
+// Run after a trait change
+function change_trait() {
+	window.current_action = "Changing Trait";
+	if (document.getElementById("race").value == "Human") {
+		update_skill_costs();
+	}
+	Notification.success("Changed race to " + get_character_race(), window.current_action);
+}
+
 
 function set_race(race) {
 	document.getElementById("race").value = race;
@@ -849,7 +899,36 @@ function get_character_class() {
 }
 
 function get_character_race() {
-	return document.getElementById('race').value;
+	var race = document.getElementById('race').value;
+	if (!hash["Races"][race]["Super Race"]) {
+		return race;
+	}
+	return get_character_trait() + " " + race;
+}
+
+function get_character_feature() {
+	if (hash["Races"][get_character_race()]["Super Race"]) {
+		return "None";
+	}
+	return document.getElementById('ability_2').innerHTML;
+}
+
+function get_character_trait() {
+	return document.getElementById('trait').value;
+}
+
+function get_character_total_build() {
+	var build = parseInt(document.getElementById('total_build').value);
+	return (build >= 15) ? build : 30;
+}
+
+function get_character_body() {
+	var body_data = hash["Classes"][get_character_class()];
+	return body_data["Base Body"] + get_character_level() * body_data["Body Per Level"];
+}
+
+function get_character_level() {
+	return Math.floor((get_character_total_build() - 5) / 10);
 }
 
 function update_spelltree_cost() {
@@ -921,7 +1000,7 @@ function get_skill_cost(skill_name, character_class, character_race) {
 	} else if (skill_ary[character_class] != null) {
 		cost = skill_ary[character_class];
 	} else if (skill_ary["Primary"] != null) { // Magic skills (Formal)
-		if (skill_name.search(get_primary_school() > -1)) {
+	if (skill_name.search(get_primary_school()) > -1) {
 			cost = skill_ary["Primary"][character_class];
 		} else {
 			cost = skill_ary["Secondary"][character_class];
@@ -962,3 +1041,154 @@ function get_skill_cost(skill_name, character_class, character_race) {
 	return cost;
 }
 
+function generate_pdf() {
+	window.current_action = "Generating a PDF";
+	var doc = new jsPDF();
+	doc.setFontSize(40);
+	doc.text(58, 25, "NERO Rewrite");
+	doc.setFontSize(12);
+	doc.setTextColor(0,0,255);
+	doc.text(88, 30, "coreykump.com/ncc");
+	doc.setTextColor(0,0,0);
+	doc.setFontStyle("bold");
+	doc.text(10, 40, "Player:");
+	doc.text(10, 45, "Character:");
+	doc.text(10, 50, "Class:");
+	doc.text(10, 55, "Race:");
+	doc.text(10, 60, "Feature:");
+	doc.text(10, 65, "Level:");
+	doc.text(10, 70, "Body:");
+	doc.text(10, 75, "Build:");
+	doc.text(10, 80, "Spent:");
+
+	doc.setFontStyle("normal");
+	doc.text(40, 40, document.getElementById('player_name').value);
+	doc.text(40, 45, document.getElementById('character_name').value);
+	doc.text(40, 50, get_character_class());
+	doc.text(40, 55, get_character_race());
+	doc.text(40, 60, get_character_feature());
+	doc.text(40, 65, get_character_level().toString());
+	doc.text(40, 70, get_character_body().toString());
+	doc.text(40, 75, get_character_total_build().toString());
+	doc.text(40, 80, document.getElementById('spent_build').value);
+	
+	doc.setFontSize(16);
+	doc.setFontStyle("bold");
+	doc.text(10, 90, "Spells:");
+	doc.text(10, 125, "Skills:");
+	
+	doc.setFontSize(12);
+
+	doc.text(15,  95, "Primary");
+	doc.text(15, 110, "Secondary");
+	doc.setFontStyle("normal");
+	doc.text(15,  100, get_primary_school());
+	doc.text(15, 115, get_secondary_school());
+
+	var rows = [95, 110];
+	var trees = ["p_", "s_"];
+	for(var i = 0; i < rows.length; i++) {
+		var row = rows[i];
+		var tree = trees[i];
+		console.log(row + tree);
+		var range = ["1","2","3","0","4","5","6","0","7","8","9"];
+
+		for(var j = 0; j < range.length; j++) {
+			if (parseInt(range[j]) == 0) {
+				doc.text(40+5*j, row, "/");
+			} else {
+				doc.setFontStyle("bold");
+				doc.text(40+5*j, row, range[j]);
+				doc.setFontStyle("normal");
+				doc.text(40+5*j, row+5, document.getElementById(tree + range[j]).textContent);
+				console.log(document.getElementById(tree + range[j]).textContent);
+			}
+		}
+		doc.text(105, row, "Cost");
+		doc.text(105, row+5, document.getElementById(tree+"cost").textContent);
+	}
+
+	doc.setFontStyle("bold");
+	doc.text(40, 130, "Skill");
+	doc.text(15, 130, "Cost");
+	doc.setFontStyle("normal");
+
+	var skills = document.getElementById('skill_table').children;
+	for (var i = 0; i < skills.length; i++) {
+		var skill_cost = skills.item(i).children.item(3).textContent;
+		var skill_name = skills.item(i).children.item(2).textContent;
+		var skill_count = skills.item(i).children.item(1).textContent;
+		doc.text(15, 135 + (i * 5), skill_cost);
+		if (skill_count > 1) {
+			doc.text(40, 135 + (i * 5), skill_count + "x " + skill_name);
+		} else {
+			doc.text(40, 135 + (i * 5), skill_name);
+		}
+		console.log(skill_cost + " - " + skill_count + "x " + skill_name);
+	}
+
+	doc.save("NERO_Character.pdf");
+	Notification.success("PDF Generated", window.current_action);
+	return false;
+}
+
+function mail_character() {
+	var body = "";
+	body += "Player Name:\t" + document.getElementById('player_name').value + "\n";
+	body += "Character Name:\t" + document.getElementById('character_name').value + "\n";
+	body += "Class:\t" + get_character_class() + "\n";
+	body += "Race:\t" + get_character_race() + "\n";
+	body += "Feature:\t" + get_character_feature() + "\n";
+
+	body += "Level:\t" + get_character_level().toString() + "\n";
+	body += "Body:\t" + get_character_body().toString() + "\n";
+	body += "Build:\t" + document.getElementById('total_build').value  + "\n";
+	body += "Spent:\t" + document.getElementById('spent_build').value + "\n";
+	body += "\n";
+
+	var trees = ["p_", "s_"]
+	var range = ["1","2","3","0","4","5","6","0","7","8","9"];
+	for (var i = 0; i < trees.length; i++) {
+		if (trees[i] == "p_") {
+			body += "Primary Spell Tree (" + get_primary_school() + "):\n";
+		} else {
+			body += "Secondary Spell Tree (" + get_secondary_school() + "):\n";
+		}
+		for (var j = 0; j < range.length; j++) {
+			if (parseInt(range[j]) == 0) {
+				body += "/ ";
+			} else {
+				body += document.getElementById(trees[i] + range[j]).textContent + " ";
+			}
+		}
+		body += "\n";
+	}
+	body += "\n";
+
+	body += "Skills:";
+	var skills = document.getElementById('skill_table').children;
+	for (var i = 0; i < skills.length; i++) {
+		var skill_cost = skills.item(i).children.item(3).textContent;
+		var skill_name = skills.item(i).children.item(2).textContent;
+		var skill_count = skills.item(i).children.item(1).textContent;
+		body += skill_cost + " - ";
+		if (skill_count > 1) {
+			body += skill_count + "x " + skill_name;
+		} else {
+			body += skill_name;
+		}
+		body += "\n";
+	}
+
+	var addresses = "";
+	var subject = "My NERO Rewrite";
+	var href = "mailto:" + addresses + "?" + 
+		"subject=" + encodeURIComponent(subject) + "&" + 
+		"body=" + encodeURIComponent(body);
+	console.log(href);
+
+	$('#a_email').attr('href', href);
+	$('#a_email').show();
+
+	return false;
+}

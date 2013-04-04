@@ -20,16 +20,18 @@ Contact me at:
 firstname dot lastname @ gmail dot com
 -->
 
-<script type="text/javascript" src="lib/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="lib/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="lib/jquery-ui-1.8.22.custom.min.js"></script>
 <script type="text/javascript" src="lib/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="lib/noty/layouts/top.js"></script>
 <script type="text/javascript" src="lib/noty/layouts/topRight.js"></script>
 <script type="text/javascript" src="lib/noty/themes/default.js"></script>
+<script type="text/javascript" src="lib/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="lib/jspdf/libs/FileSaver.js/FileSaver.js"></script>
 <script type="text/javascript" src="ncc.js"></script>
 <script type="text/javascript">
 	var hash = 
-{"Races" : {"Barbarian" : {"Starting Body" : 2, "Double Cost for Skills" : ["Read and Write", "Read Magic", ], "Racial Skills" : {"Detect Celestial Magic" : 2, "Barbarian Slay" : 10, }, }, "Biata" : {"Prohibited Skills" : ["Read Magic", ], "Racial Skills" : {"Break Charm" : 2, "Resist Charm" : 3, "Resist Sleep" : 2, }, }, "Drae" : {"Abilities" : ["-2 Body between 6 AM and 6 PM", ], "Half Cost for Skills" : ["Archery", ], "Prohibited Skills" : ["Two Handed Blunt", "Two Handed Sword", ], "Racial Skills" : {"Resist Charm" : 3, "Resist Sleep" : 2, }, }, "Dwarf" : {"Racial Skills" : {"Resist Poison" : 4, }, "Starting Body" : 1, "Reduced Cost for Skills" : ["Smithing", ], "Prohibited Skills" : ["Staff", "Two Handed Blunt", "Two Handed Sword", "Polearm", "Two Handed Weapon Master", "Weapon Master", ], "Double Cost for Skills" : ["Read Magic", ], }, "Elf" : {"Starting Body" : -1, "Half Cost for Skills" : ["Archery", ], "Racial Skills" : {"Resist Charm" : 3, "Resist Sleep" : 2, }, "Prohibited Skills" : ["Two Handed Blunt", "Two Handed Sword", ], }, "Gypsy" : {"Racial Skills" : {"Gypsy Curse/Remove Gypsy Curse" : 2, }, }, "Half Ogre" : {"Starting Body" : 2, "Double Cost for Skills" : ["Read and Write", "Read Magic", ], "Racial Skills" : {"Strong Arm" : 10, }, }, "Half Orc" : {"Starting Body" : 2, "Double Cost for Skills" : ["Read and Write", "Read Magic", ], "Racial Skills" : {"Strong Arm" : 10, }, }, "Hobling" : {"Starting Body" : -1, "Racial Skills" : {"Resist Poison" : 4, "Hobling Dodge" : 12, }, "Prohibited Skills" : ["Archery", "Staff", "Two Handed Blunt", "Two Handed Sword", "Polearm", "Two Handed Weapon Master", "Weapon Master", ], "Prohibited Classes" : ["Fighter", ], "Default Class" : "Rogue", "Half Cost for Skills" : ["Pick Locks", "Disarm/Arm Trap", ], }, "Human" : {"Default" : true, }, "Mystic Wood Elf" : {"Abilities" : ["Must purchase one craftsman skill per level", ], "Racial Skills" : {"Break Charm" : 2, "Resist Charm" : 3, }, "Reduced Cost for Skills" : ["Craftsman Other", ], "Level Requirements" : ["Craftsman", ], }, "Sarr" : {"Abilities" : ["Scenting", ], "Racial Skills" : {"Resist Poison" : 4, }, "Prohibited Skills" : ["One Handed Blunt", "Two Handed Blunt", "Staff", "Archery", "Thrown Weapon", "One Handed Weapon Master", ], }, "Scavenger" : {"Abilities" : ["Scenting", ], "Racial Skills" : {"Resist Poison" : 4, }, "Double Cost for Skills" : ["Read and Write", "Read Magic", ], }, }, "Classes" : {"Fighter" : {"Base Body" : 4, "Body Per Level" : 2, }, "Rogue" : {"Base Body" : 3, "Body Per Level" : 1, }, "Templar" : {"Base Body" : 3, "Body Per Level" : 1, }, "Scholar" : {"Base Body" : 2.666667, "Body Per Level" : 0.666667, }, }, "Schools of Magic" : {"Earth" : {"Requires" : ["Healing Arts", ], }, "Celestial" : {"Requires" : ["Read Magic", ], }, }, "Spell Costs" : {"Fighter" : [3, 3, 6, 6, 9, 9, 12, 12, 15, ], "Rogue" : [2, 2, 4, 4, 6, 6, 8, 8, 10, ], "Scholar" : [1, 1, 2, 2, 3, 3, 4, 4, 5, ], "Templar" : [1, 1, 2, 3, 3, 4, 5, 5, 6, ], }, "Skills" : {"Alchemy" : {"Types" : ["Craftsman", ], "Requires" : ["Herbal Lore", ], "Max" : 0, "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 4, "Templar" : 5, }, }, "Archery" : {"Cost" : {"Fighter" : 6, "Rogue" : 10, "Scholar" : 15, "Templar" : 12, }, "Includes" : ["Weapon", ], }, "Assassinate/Dodge" : {"Max" : 0, "Requires" : {"Backstab" : 2, }, "Options" : ["Hand", ], "Cost" : {"Fighter" : 20, "Rogue" : 10, "Scholar" : 20, "Templar" : 20, }, }, "Back Attack" : {"Max" : 4, "Requires" : ["Weapon", ], "Options" : ["Hand", ], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 6, "Templar" : 6, }, }, "Backstab" : {"Max" : 0, "Requires" : ["Weapon", ], "Options" : ["Hand", ], "Includes" : {"Back Attack" : 4, }, "Cost" : {"Fighter" : 30, "Rogue" : 15, "Scholar" : 30, "Templar" : 30, }, }, "Barbarian Slay" : {"Racial" : true, }, "Break Charm" : {"Racial" : true, "Max" : 0, }, "Craftsman Other" : {"Types" : ["Craftsman", ], "Max" : 0, "Options" : ["Type", ], "Cost" : {"Fighter" : 3, "Rogue" : 3, "Scholar" : 3, "Templar" : 3, }, }, "Create Potion" : {"Max" : 0, "Types" : ["Craftsman", ], "Requires" : ["Earth 4", ], "Cost" : {"Fighter" : 6, "Rogue" : 5, "Scholar" : 3, "Templar" : 4, }, }, "Create Scroll" : {"Max" : 0, "Types" : ["Craftsman", ], "Requires" : ["Celestial 4", ], "Cost" : {"Fighter" : 6, "Rogue" : 5, "Scholar" : 3, "Templar" : 4, }, }, "Create Trap" : {"Types" : ["Craftsman", ], "Max" : 0, "Requires" : ["Disarm/Arm Trap", ], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 4, "Templar" : 5, }, }, "Critical Attack" : {"Max" : 4, "Requires" : ["Weapon", ], "Options" : ["Hand", "Weapon", ], "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 6, "Templar" : 3, }, }, "Critical Slay/Parry" : {"Max" : 0, "Requires" : {"Proficiency" : 2, }, "Options" : ["Hand", "Weapon", ], "Cost" : {"Fighter" : 10, "Rogue" : 15, "Scholar" : 20, "Templar" : 13, }, }, "Detect Celestial Magic" : {"Racial" : true, "Max" : 0, }, "Dexterity Armor" : {"Cost" : 3, "Max" : 10, }, "Disarm/Arm Trap" : {"Types" : ["Craftsman", ], "Cost" : {"Fighter" : 9, "Rogue" : 3, "Scholar" : 6, "Templar" : 9, }, }, "Evaluate Item" : {"Types" : ["Craftsman", ], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 6, "Templar" : 6, }, }, "First Aid" : {"Types" : ["Craftsman", ], "Cost" : {"Fighter" : 4, "Rogue" : 3, "Scholar" : 2, "Templar" : 2, }, }, "Florentine" : {"Requires" : ["Weapon", ], "Cost" : {"Fighter" : 6, "Rogue" : 6, "Scholar" : 12, "Templar" : 8, }, }, "Formal Magic (Celestial)" : {"Max" : 0, "Requires" : ["Celestial 9", ], "Cost" : {"Primary" : {"Fighter" : 12, "Rogue" : 8, "Scholar" : 4, "Templar" : 6, }, "Secondary" : {"Fighter" : 24, "Rogue" : 18, "Scholar" : 8, "Templar" : 10, }, }, }, "Formal Magic (Earth)" : {"Max" : 0, "Requires" : ["Earth 9", ], "Cost" : {"Primary" : {"Fighter" : 12, "Rogue" : 8, "Scholar" : 4, "Templar" : 6, }, "Secondary" : {"Fighter" : 24, "Rogue" : 18, "Scholar" : 8, "Templar" : 10, }, }, }, "Gypsy Curse/Remove Gypsy Curse" : {"Racial" : true, "Max" : 0, }, "Healing Arts" : {"Types" : ["Craftsman", ], "Requires" : ["First Aid", "Read and Write", ], "Cost" : {"Fighter" : 4, "Rogue" : 3, "Scholar" : 2, "Templar" : 2, }, }, "Herbal Lore" : {"Types" : ["Craftsman", ], "Requires" : ["Read and Write", ], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 4, "Templar" : 5, }, }, "Hobling Dodge" : {"Racial" : true, }, "Manifold" : {"Requires" : ["Prepare Hearth", ], "Cost" : {"Fighter" : 9, "Rogue" : 6, "Scholar" : 3, "Templar" : 4, }, }, "Master Critical Attack" : {"Max" : 4, "Requires" : ["Weapon", ], "Options" : ["Hand", ], "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 6, "Templar" : 4, }, }, "Master Critical Slay/Parry" : {"Max" : 0, "Requires" : {"Master Proficiency" : 2, }, "Includes" : ["Critical Slay/Parry", ], "Options" : ["Hand", ], "Cost" : {"Fighter" : 13, "Rogue" : 18, "Scholar" : 25, "Templar" : 15, }, }, "Master Proficiency" : {"Max" : 0, "Requires" : ["Weapon", ], "Options" : ["Hand", ], "Includes" : {"Master Critical Attack" : 4, "Proficiency" : 1, }, "Cost" : {"Fighter" : 17, "Rogue" : 24, "Scholar" : 34, "Templar" : 22, }, }, "One Handed Block" : {"Cost" : 0, }, "One Handed Blunt" : {"Includes" : ["One Handed Weapon", ], "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 8, "Templar" : 5, }, }, "One Handed Edged" : {"Includes" : ["One Handed Weapon", ], "Cost" : {"Fighter" : 5, "Rogue" : 5, "Scholar" : 10, "Templar" : 7, }, }, "One Handed Weapon" : {"Includes" : ["Weapon", ], }, "One Handed Weapon Master" : {"Includes" : ["One Handed Edged", "One Handed Blunt", "Small Weapon", ], "Cost" : {"Fighter" : 8, "Rogue" : 9, "Scholar" : 14, "Templar" : 10, }, }, "Pick Locks" : {"Types" : ["Craftsman", ], "Cost" : {"Fighter" : 9, "Rogue" : 3, "Scholar" : 9, "Templar" : 9, }, }, "Polearm" : {"Includes" : ["Two Handed Weapon", ], "Cost" : {"Fighter" : 8, "Rogue" : 10, "Scholar" : 12, "Templar" : 10, }, }, "Prepare Hearth" : {"Requires" : ["Spell 1", ], "Cost" : {"Fighter" : 6, "Rogue" : 4, "Scholar" : 2, "Templar" : 3, }, }, "Proficiency" : {"Includes" : {"Critical Attack" : 4, }, "Requires" : ["Weapon", ], "Max" : 0, "Options" : ["Hand", "Weapon", ], "Cost" : {"Fighter" : 15, "Rogue" : 20, "Scholar" : 30, "Templar" : 18, }, }, "Read and Write" : {"Types" : ["Scholarly", "Craftsman", ], "Cost" : {"Fighter" : 6, "Rogue" : 6, "Scholar" : 3, "Templar" : 3, }, }, "Read Magic" : {"Types" : ["Scholarly", "Craftsman", ], "Requires" : ["Read and Write", ], "Cost" : {"Fighter" : 8, "Rogue" : 6, "Scholar" : 4, "Templar" : 4, }, }, "Resist Charm" : {"Max" : 0, "Racial" : true, }, "Resist Poison" : {"Max" : 0, "Racial" : true, }, "Resist Sleep" : {"Max" : 0, "Racial" : true, }, "Shield" : {"Cost" : {"Fighter" : 5, "Rogue" : 10, "Scholar" : 15, "Templar" : 7, }, }, "Small Weapon" : {"Includes" : ["One Handed Weapon", ], "Cost" : 2, }, "Smithing" : {"Max" : 0, "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Staff" : {"Includes" : ["Weapon", ], "Cost" : 4, }, "Stop Thrust" : {"Cost" : 2, "Max" : 0, "Requires" : {"Two Handed Weapon" : 0, "Proficiency" : 2, }, }, "Strong Arm" : {"Racial" : true, }, "Style Master" : {"Includes" : ["Florentine", "Two Weapons", "Shield", ], "Cost" : {"Fighter" : 10, "Rogue" : 15, "Scholar" : 20, "Templar" : 15, }, }, "Thrown Weapon" : {"Includes" : ["Weapon", ], "Cost" : 4, }, "Two Handed Blunt" : {"Includes" : ["Two Handed Weapon", ], "Cost" : {"Fighter" : 6, "Rogue" : 8, "Scholar" : 12, "Templar" : 8, }, }, "Two Handed Sword" : {"Includes" : ["Two Handed Weapon", ], "Cost" : {"Fighter" : 8, "Rogue" : 12, "Scholar" : 16, "Templar" : 12, }, }, "Two Handed Weapon" : {"Includes" : ["Weapon", ], }, "Two Handed Weapon Master" : {"Includes" : ["Polearm", "Two Handed Blunt", "Two Handed Sword", "Staff", ], "Cost" : {"Fighter" : 12, "Rogue" : 14, "Scholar" : 18, "Templar" : 14, }, }, "Two Weapons" : {"Requires" : ["Florentine", ], "Cost" : {"Fighter" : 2, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Waylay" : {"Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 6, "Templar" : 3, }, "Max" : 0, "Requires" : {"One Handed Weapon" : 0, "Level" : 5, }, }, "Weapon Master" : {"Includes" : ["One Handed Weapon Master", "Two Handed Weapon Master", ], "Cost" : {"Fighter" : 15, "Rogue" : 18, "Scholar" : 20, "Templar" : 18, }, }, "Wear Extra Armor" : {"Max" : {"Fighter" : 4, "Rogue" : 5, "Scholar" : 6, "Templar" : 5, }, "Cost" : {"Fighter" : 3, "Rogue" : 3, "Scholar" : 4, "Templar" : 3, }, }, }, };
+{"Races" : {"Barbarian" : {"Abilities" : ["Strong", "Wild", "Racial Weapon: Two Handed Weapons", ], "Half Cost for Skills" : ["Racial Slay", "Racial Strong Arm", "Racial Rip from Binding", "Racial Detect Magic", "Racial Dispel Magic", "Racial Battle Rage", ], }, "Biata" : {"Abilities" : ["Willful", "Telepathic", "Racial Feature: Mentalist", ], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Awaken", "Racial Calm", "Racial Break Charm", ], }, "Drae" : {"Abilities" : ["Fast", "Willful", "Racial Weapon: Crossbows", ], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Light Touch", "Racial Dodge", "Racial Sneak Attack", ], }, "Dwarf" : {"Abilities" : ["Tough", "Tradesman", "Racial Weapon: Hammers", ], "Half Cost for Skills" : ["Racial Resist Poison", "Racial Resist Physical", "Racial Toughness", "Racial Merchant", "Racial Harvester", "Racial Grandmaster", ], }, "Elf" : {"Abilities" : ["Fast", "Willful", "Racial Weapon: Bow", ], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Light Touch", "Racial Dodge", "Racial Sneak Attack", ], }, "Gypsy" : {"Abilities" : ["Survivor", "Tradesman", "Racial Feature: Gypsy Curse", ], "Half Cost for Skills" : ["Racial Merchant", "Racial Harvester", "Racial Grandmaster", "Racial Detect Poison/Antidote", "Racial Will to Live", "Racial Ready Armor", ], }, "Half Ogre" : {"Abilities" : ["Strong", "Tough", "Racial Weapon: Two-Handed Weapons", ], "Half Cost for Skills" : ["Racial Slay", "Racial Strong Arm", "Racial Rip from Binding", "Racial Resist Poison", "Racial Resist Physical", "Racial Toughness", ], }, "Half Orc" : {"Abilities" : ["Strong", "Wild", "Racial Weapon: Axes", ], "Half Cost for Skills" : ["Racial Slay", "Racial Strong Arm", "Racial Rip from Binding", "Racial Detect Magic", "Racial Dispel Magic", "Racial Battle Rage", ], }, "Hobling" : {"Abilities" : ["Tough", "Fast", "Racial Weapon: Short Weapons", ], "Half Cost for Skills" : ["Racial Resist Poison", "Racial Resist Physical", "Racial Toughness", "Racial Light Touch", "Racial Dodge", "Racial Sneak Attack", ], }, "Human" : {"Default" : true, "Super Race" : true, "Traits" : ["Strong", "Fast", "Tradesman", "Tough", "Wild", "Willful", "Telepathic", "Survivor", ], "Abilities" : ["One of your choice", "Racial Feature: None", ], }, "Strong Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Slay", "Racial Strong Arm", "Racial Rip from Binding", ], }, "Fast Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Light Touch", "Racial Dodge", "Racial Sneak Attack", ], }, "Tradesman Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Merchant", "Racial Harvester", "Racial Grandmaster", ], }, "Tough Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Resist Poison", "Racial Resist Physical", "Racial Toughness", ], }, "Wild Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Detect Magic", "Racial Dispel Magic", "Racial Battle Rage", ], }, "Willful Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", ], }, "Telepathic Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Awaken", "Racial Calm", "Racial Break Charm", ], }, "Survivor Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Detect Poison/Antidote", "Racial Will to Live", "Racial Ready Armor", ], }, "Mystic Wood Elf" : {"Abilities" : ["Willful", "Tradesman", "Racial Feature: Break Charm", ], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Merchant", "Racial Harvester", "Racial Grandmaster", ], }, "Sarr" : {"Abilities" : ["Fast", "Survivor", "Racial Weapon - Base 2 Claws", ], "Half Cost for Skills" : ["Racial Detect Poison/Antidote", "Racial Will to Live", "Racial Ready Armor", "Racial Light Touch", "Racial Dodge", "Racial Sneak Attack", ], }, "Scavenger" : {"Abilities" : ["Survivor", "Tough", "Racial Weapon - Base 2 Claws", ], "Half Cost for Skills" : ["Racial Detect Poison/Antidote", "Racial Will to Live", "Racial Ready Armor", "Racial Resist Poison", "Racial Resist Physical", "Racial Toughness", ], }, "Stone Elf" : {"Abilities" : ["Telepathic", "Willful", "Racial Feature: Mentalist", ], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Awaken", "Racial Calm", "Racial Break Charm", ], }, "Wild Elf" : {"Abilities" : ["Fast", "Wild", "Racial Weapon: Bow", ], "Half Cost for Skills" : ["Racial Light Touch", "Racial Dodge", "Racial Sneak Attack", "Racial Detect Magic", "Racial Dispel Magic", "Racial Battle Rage", ], }, }, "Classes" : {"Fighter" : {"Base Body" : 4, "Body Per Level" : 2, }, "Rogue" : {"Base Body" : 3, "Body Per Level" : 1, }, "Templar" : {"Base Body" : 3, "Body Per Level" : 1, }, "Scholar" : {"Base Body" : 2.666667, "Body Per Level" : 0.666667, }, }, "Schools of Magic" : {"Earth" : {"Requires" : ["Healing Arts", ], }, "Celestial" : {"Requires" : ["Read Magic", ], }, }, "Spell Costs" : {"Fighter" : [3, 3, 6, 6, 9, 9, 12, 12, 15, ], "Rogue" : [2, 2, 4, 4, 6, 6, 8, 8, 10, ], "Scholar" : [1, 1, 2, 2, 3, 3, 4, 4, 5, ], "Templar" : [1, 1, 2, 3, 3, 4, 5, 5, 6, ], }, "Skills" : {"Alchemy" : {"Types" : ["Craftsman", ], "Requires" : ["Herbal Lore", ], "Max" : 0, "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 4, "Templar" : 5, }, }, "Archery" : {"Cost" : {"Fighter" : 6, "Rogue" : 10, "Scholar" : 15, "Templar" : 12, }, "Includes" : ["Weapon", ], }, "Assassinate/Dodge" : {"Max" : 0, "Requires" : {"Backstab" : 2, }, "Options" : ["Hand", ], "Cost" : {"Fighter" : 20, "Rogue" : 10, "Scholar" : 20, "Templar" : 20, }, }, "Back Attack" : {"Max" : 4, "Requires" : ["Weapon", ], "Options" : ["Hand", ], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 6, "Templar" : 6, }, }, "Backstab" : {"Max" : 0, "Requires" : ["Weapon", ], "Options" : ["Hand", ], "Includes" : {"Back Attack" : 4, }, "Cost" : {"Fighter" : 30, "Rogue" : 15, "Scholar" : 30, "Templar" : 30, }, }, "Craftsman Other" : {"Types" : ["Craftsman", ], "Max" : 0, "Options" : ["Type", ], "Cost" : {"Fighter" : 3, "Rogue" : 3, "Scholar" : 3, "Templar" : 3, }, }, "Create Potion" : {"Max" : 0, "Types" : ["Craftsman", ], "Requires" : ["Earth 4", ], "Cost" : {"Fighter" : 6, "Rogue" : 5, "Scholar" : 3, "Templar" : 4, }, }, "Create Scroll" : {"Max" : 0, "Types" : ["Craftsman", ], "Requires" : ["Celestial 4", ], "Cost" : {"Fighter" : 6, "Rogue" : 5, "Scholar" : 3, "Templar" : 4, }, }, "Create Trap" : {"Types" : ["Craftsman", ], "Max" : 0, "Requires" : ["Disarm/Arm Trap", ], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 4, "Templar" : 5, }, }, "Critical Attack" : {"Max" : 4, "Requires" : ["Weapon", ], "Options" : ["Hand", "Weapon", ], "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 6, "Templar" : 3, }, }, "Critical Slay/Parry" : {"Max" : 0, "Requires" : {"Proficiency" : 2, }, "Options" : ["Hand", "Weapon", ], "Cost" : {"Fighter" : 10, "Rogue" : 15, "Scholar" : 20, "Templar" : 13, }, }, "Dexterity Armor" : {"Cost" : 3, "Max" : 10, }, "Disarm/Arm Trap" : {"Types" : ["Craftsman", ], "Cost" : {"Fighter" : 9, "Rogue" : 3, "Scholar" : 6, "Templar" : 9, }, }, "Evaluate Item" : {"Types" : ["Craftsman", ], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 6, "Templar" : 6, }, }, "First Aid" : {"Types" : ["Craftsman", ], "Cost" : {"Fighter" : 4, "Rogue" : 3, "Scholar" : 2, "Templar" : 2, }, }, "Florentine" : {"Requires" : ["Weapon", ], "Cost" : {"Fighter" : 6, "Rogue" : 6, "Scholar" : 12, "Templar" : 8, }, }, "Formal Magic (Celestial)" : {"Max" : 0, "Requires" : ["Celestial 9", ], "Cost" : {"Primary" : {"Fighter" : 12, "Rogue" : 8, "Scholar" : 4, "Templar" : 6, }, "Secondary" : {"Fighter" : 24, "Rogue" : 18, "Scholar" : 8, "Templar" : 10, }, }, }, "Formal Magic (Earth)" : {"Max" : 0, "Requires" : ["Earth 9", ], "Cost" : {"Primary" : {"Fighter" : 12, "Rogue" : 8, "Scholar" : 4, "Templar" : 6, }, "Secondary" : {"Fighter" : 24, "Rogue" : 18, "Scholar" : 8, "Templar" : 10, }, }, }, "Healing Arts" : {"Types" : ["Craftsman", ], "Requires" : ["First Aid", "Read and Write", ], "Cost" : {"Fighter" : 4, "Rogue" : 3, "Scholar" : 2, "Templar" : 2, }, }, "Herbal Lore" : {"Types" : ["Craftsman", ], "Requires" : ["Read and Write", ], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 4, "Templar" : 5, }, }, "Manifold" : {"Requires" : ["Prepare Hearth", ], "Cost" : {"Fighter" : 9, "Rogue" : 6, "Scholar" : 3, "Templar" : 4, }, }, "Master Critical Attack" : {"Max" : 4, "Requires" : ["Weapon", ], "Options" : ["Hand", ], "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 6, "Templar" : 4, }, }, "Master Critical Slay/Parry" : {"Max" : 0, "Requires" : {"Master Proficiency" : 2, }, "Includes" : ["Critical Slay/Parry", ], "Options" : ["Hand", ], "Cost" : {"Fighter" : 13, "Rogue" : 18, "Scholar" : 25, "Templar" : 15, }, }, "Master Proficiency" : {"Max" : 0, "Requires" : ["Weapon", ], "Options" : ["Hand", ], "Includes" : {"Master Critical Attack" : 4, "Proficiency" : 1, }, "Cost" : {"Fighter" : 17, "Rogue" : 24, "Scholar" : 34, "Templar" : 22, }, }, "One Handed Block" : {"Cost" : 0, }, "One Handed Blunt" : {"Includes" : ["One Handed Weapon", ], "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 8, "Templar" : 5, }, }, "One Handed Edged" : {"Includes" : ["One Handed Weapon", ], "Cost" : {"Fighter" : 5, "Rogue" : 5, "Scholar" : 10, "Templar" : 7, }, }, "One Handed Weapon" : {"Includes" : ["Weapon", ], }, "One Handed Weapon Master" : {"Includes" : ["One Handed Edged", "One Handed Blunt", "Small Weapon", ], "Cost" : {"Fighter" : 8, "Rogue" : 9, "Scholar" : 14, "Templar" : 10, }, }, "Pick Locks" : {"Types" : ["Craftsman", ], "Cost" : {"Fighter" : 9, "Rogue" : 3, "Scholar" : 9, "Templar" : 9, }, }, "Polearm" : {"Includes" : ["Two Handed Weapon", ], "Cost" : {"Fighter" : 8, "Rogue" : 10, "Scholar" : 12, "Templar" : 10, }, }, "Prepare Hearth" : {"Requires" : ["Spell 1", ], "Cost" : {"Fighter" : 6, "Rogue" : 4, "Scholar" : 2, "Templar" : 3, }, }, "Proficiency" : {"Includes" : {"Critical Attack" : 4, }, "Requires" : ["Weapon", ], "Max" : 0, "Options" : ["Hand", "Weapon", ], "Cost" : {"Fighter" : 15, "Rogue" : 20, "Scholar" : 30, "Templar" : 18, }, }, "Racial Awaken" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Racial Battle Rage" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Racial Break Charm" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Racial Calm" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Racial Detect Magic" : {"Max" : 0, "Cost" : {"Fighter" : 2, "Rogue" : 2, "Scholar" : 2, "Templar" : 2, }, }, "Racial Detect Poison/Antidote" : {"Max" : 0, "Cost" : {"Fighter" : 6, "Rogue" : 6, "Scholar" : 6, "Templar" : 6, }, }, "Racial Dispel Magic" : {"Max" : 0, "Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8, }, }, "Racial Dodge" : {"Cost" : {"Fighter" : 24, "Rogue" : 24, "Scholar" : 24, "Templar" : 24, }, }, "Racial Grandmaster" : {"Cost" : {"Fighter" : 20, "Rogue" : 20, "Scholar" : 20, "Templar" : 20, }, }, "Racial Harvester" : {"Cost" : {"Fighter" : 10, "Rogue" : 10, "Scholar" : 10, "Templar" : 10, }, }, "Racial Light Touch" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Racial Merchant" : {"Cost" : {"Fighter" : 10, "Rogue" : 10, "Scholar" : 10, "Templar" : 10, }, }, "Racial Ready Armor" : {"Max" : 0, "Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8, }, }, "Racial Remove Fear" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Racial Resist Charm" : {"Cost" : {"Fighter" : 6, "Rogue" : 6, "Scholar" : 6, "Templar" : 6, }, "Max" : 0, }, "Racial Resist Physical" : {"Cost" : {"Fighter" : 10, "Rogue" : 10, "Scholar" : 10, "Templar" : 10, }, }, "Racial Resist Poison" : {"Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8, }, "Max" : 0, }, "Racial Resist Sleep" : {"Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, "Max" : 0, }, "Racial Rip from Binding" : {"Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8, }, "Max" : 0, }, "Racial Slay" : {"Cost" : {"Fighter" : 20, "Rogue" : 20, "Scholar" : 20, "Templar" : 20, }, }, "Racial Sneak Attack" : {"Cost" : {"Fighter" : 16, "Rogue" : 16, "Scholar" : 16, "Templar" : 16, }, }, "Racial Strong Arm" : {"Cost" : {"Fighter" : 20, "Rogue" : 20, "Scholar" : 20, "Templar" : 20, }, }, "Racial Toughness" : {"Max" : 0, "Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8, }, }, "Racial Will to Live" : {"Cost" : {"Fighter" : 20, "Rogue" : 20, "Scholar" : 20, "Templar" : 20, }, }, "Read and Write" : {"Types" : ["Scholarly", "Craftsman", ], "Cost" : {"Fighter" : 6, "Rogue" : 6, "Scholar" : 3, "Templar" : 3, }, }, "Read Magic" : {"Types" : ["Scholarly", "Craftsman", ], "Requires" : ["Read and Write", ], "Cost" : {"Fighter" : 8, "Rogue" : 6, "Scholar" : 4, "Templar" : 4, }, }, "Shield" : {"Cost" : {"Fighter" : 5, "Rogue" : 10, "Scholar" : 15, "Templar" : 7, }, }, "Small Weapon" : {"Includes" : ["One Handed Weapon", ], "Cost" : 2, }, "Smithing" : {"Max" : 0, "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Staff" : {"Includes" : ["Weapon", ], "Cost" : 4, }, "Stop Thrust" : {"Cost" : 2, "Max" : 0, "Requires" : {"Two Handed Weapon" : 0, "Two Handed Proficiency" : 2, }, }, "Style Master" : {"Includes" : ["Florentine", "Two Weapons", "Shield", ], "Cost" : {"Fighter" : 10, "Rogue" : 15, "Scholar" : 20, "Templar" : 15, }, }, "Thrown Weapon" : {"Includes" : ["Weapon", ], "Cost" : 4, }, "Two Handed Blunt" : {"Includes" : ["Two Handed Weapon", ], "Cost" : {"Fighter" : 6, "Rogue" : 8, "Scholar" : 12, "Templar" : 8, }, }, "Two Handed Sword" : {"Includes" : ["Two Handed Weapon", ], "Cost" : {"Fighter" : 8, "Rogue" : 12, "Scholar" : 16, "Templar" : 12, }, }, "Two Handed Weapon" : {"Includes" : ["Weapon", ], }, "Two Handed Weapon Master" : {"Includes" : ["Polearm", "Two Handed Blunt", "Two Handed Sword", "Staff", ], "Cost" : {"Fighter" : 12, "Rogue" : 14, "Scholar" : 18, "Templar" : 14, }, }, "Two Weapons" : {"Requires" : ["Florentine", ], "Cost" : {"Fighter" : 2, "Rogue" : 4, "Scholar" : 4, "Templar" : 4, }, }, "Waylay" : {"Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 6, "Templar" : 3, }, "Max" : 0, "Requires" : {"One Handed Weapon" : 0, "Level" : 5, }, }, "Weapon Master" : {"Includes" : ["One Handed Weapon Master", "Two Handed Weapon Master", ], "Cost" : {"Fighter" : 15, "Rogue" : 18, "Scholar" : 20, "Templar" : 18, }, }, "Wear Extra Armor" : {"Max" : {"Fighter" : 4, "Rogue" : 5, "Scholar" : 6, "Templar" : 5, }, "Cost" : {"Fighter" : 3, "Rogue" : 3, "Scholar" : 4, "Templar" : 3, }, }, }, };
 
 $(function() {
 	window.current_school = "primary";
@@ -62,6 +64,14 @@ $(function() {
 
 <div id="character_info" class="box-white">
 	<p>
+		<label for="player_name">Player</label>
+		<input type="text" id="player_name" value="" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
+	</p>
+	<p>
+		<label for="character_name">Character</label>
+		<input type="text" id="character_name" value="" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
+	</p>
+	<p>
 		<label for="character_class">Class</label>
 		<select id="character_class" onchange="change_class(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
 			<option value="Fighter">Fighter</option>
@@ -72,7 +82,7 @@ $(function() {
 	</p>
 	<p>
 		<label for="race">Race</label>
-			<select id="race" onchange="change_race(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
+		<select id="race" onchange="change_race(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
 <option>Barbarian</option>
 <option>Biata</option>
 <option>Drae</option>
@@ -86,13 +96,49 @@ $(function() {
 <option>Mystic Wood Elf</option>
 <option>Sarr</option>
 <option>Scavenger</option>
+<option>Stone Elf</option>
+<option>Wild Elf</option>
 
-			</select>
+		</select>
+	</p>
+	<p id="trait_p">
+		<label for="trait">Trait</label>
+		<select id="trait" onchange="change_trait(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
+			<option>Strong</option>
+			<option>Fast</option>
+			<option>Tradesman</option>
+			<option>Tough</option>
+			<option>Wild</option>
+			<option>Willful</option>
+			<option>Telepathic</option>
+			<option>Survivor</option>
+		</select>
+	</p>
+	<table id="abilities" onclick="$('#abilities_body').toggle();">
+		<thead><tr>
+			<th id="abilities_h">Racial Traits and Features</th>
+		</tr></thead>
+	
+		<tbody id="abilities_body">
+			<tr><td id="ability_0"></td></tr>
+			<tr><td id="ability_1"></td></tr>
+			<tr><td id="ability_2"></td></tr>
+		</tbody>
+		</table>
+	<p>
+		<label for="total_build">Build</label>
+		<input type="text" id="total_build" value="30" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
 	</p>
 	<p>
-		<label for="spent_build">Build</label>
+		<label for="spent_build">Spent</label>
 		<input type="text" id="spent_build" value="0" readonly="readonly" />
 	</p>
+	<p id="print_btn_p">
+		<input type="submit" value="PDF" id="print_btn" onclick="return generate_pdf()" />
+		<input type="submit" value="Email" id="email_btn" onclick="return mail_character()" />
+		<a href="#" style="display: none;" id="a_email" onclick="$('#a_email').hide()">Click to Send Email</a>
+	</p>
+
 </div><!-- character_info -->
 
 <h2 class="title">Spells</h2>
@@ -169,21 +215,18 @@ $(function() {
 	<form onsubmit="return add_selected_skill()">
 	<p id="add_skill_row">
 		<input type="number" id="skill_number" value="1" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
-		<select id="skill_to_add" onchange="update_skill_cost();" onfocus="window.grab_keys=false;" onblur="window.grab_keys=true;" onkeyup="if (event.keyCode == 13) document.getElementById('skill_add_btn').click(); else { update_skill_cost(); } ">
+		<select id="skill_to_add" onchange="update_skill_cost();" onfocus="window.grab_keys=false;" onblur="window.grab_keys=true;" onkeyup="if (event.keyCode == 13) document.getElementById('skill_add_btn').click();">
 <option>Alchemy</option>
 <option>Archery</option>
 <option>Assassinate/Dodge</option>
 <option>Back Attack</option>
 <option>Backstab</option>
-<option>Barbarian Slay</option>
-<option>Break Charm</option>
 <option>Craftsman Other</option>
 <option>Create Potion</option>
 <option>Create Scroll</option>
 <option>Create Trap</option>
 <option>Critical Attack</option>
 <option>Critical Slay/Parry</option>
-<option>Detect Celestial Magic</option>
 <option>Dexterity Armor</option>
 <option>Disarm/Arm Trap</option>
 <option>Evaluate Item</option>
@@ -191,10 +234,8 @@ $(function() {
 <option>Florentine</option>
 <option>Formal Magic (Celestial)</option>
 <option>Formal Magic (Earth)</option>
-<option>Gypsy Curse/Remove Gypsy Curse</option>
 <option>Healing Arts</option>
 <option>Herbal Lore</option>
-<option>Hobling Dodge</option>
 <option>Manifold</option>
 <option>Master Critical Attack</option>
 <option>Master Critical Slay/Parry</option>
@@ -207,17 +248,37 @@ $(function() {
 <option>Polearm</option>
 <option>Prepare Hearth</option>
 <option>Proficiency</option>
+<option>Racial Awaken</option>
+<option>Racial Battle Rage</option>
+<option>Racial Break Charm</option>
+<option>Racial Calm</option>
+<option>Racial Detect Magic</option>
+<option>Racial Detect Poison/Antidote</option>
+<option>Racial Dispel Magic</option>
+<option>Racial Dodge</option>
+<option>Racial Grandmaster</option>
+<option>Racial Harvester</option>
+<option>Racial Light Touch</option>
+<option>Racial Merchant</option>
+<option>Racial Ready Armor</option>
+<option>Racial Remove Fear</option>
+<option>Racial Resist Charm</option>
+<option>Racial Resist Physical</option>
+<option>Racial Resist Poison</option>
+<option>Racial Resist Sleep</option>
+<option>Racial Rip from Binding</option>
+<option>Racial Slay</option>
+<option>Racial Sneak Attack</option>
+<option>Racial Strong Arm</option>
+<option>Racial Toughness</option>
+<option>Racial Will to Live</option>
 <option>Read and Write</option>
 <option>Read Magic</option>
-<option>Resist Charm</option>
-<option>Resist Poison</option>
-<option>Resist Sleep</option>
 <option>Shield</option>
 <option>Small Weapon</option>
 <option>Smithing</option>
 <option>Staff</option>
 <option>Stop Thrust</option>
-<option>Strong Arm</option>
 <option>Style Master</option>
 <option>Thrown Weapon</option>
 <option>Two Handed Blunt</option>
@@ -296,7 +357,10 @@ It utilizes skills from the <a href="http://www.nerolarp.com" target="_nat">NERO
 Corey's home chapter is <a href="http://www.neroindy.com" target="_in">NERO Indiana</a>.
 </p>
 <p>A desktop version of this app is maintained on <a href="http://www.github.com/corvec/NERO-Character-Creator" target="_git">gitHub</a>.</p>
+<p>This application is released under the terms of the <a href="http://www.gnu.org/licenses">GNU General Public License</a>, version 3.</p>
 </div><!--credits-->
+
+
 </div><!--content-->
 </div><!--sidebar-->
 

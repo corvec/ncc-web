@@ -41,7 +41,7 @@ end
 
 
 yaml_skills = {}
-File.open('ncc.yml') { |filedata| yaml_skills = YAML.load(filedata) }
+File.open('ncc_data_2013racials.yml') { |filedata| yaml_skills = YAML.load(filedata) }
 
 # 1. import skill file into skills object
 # 2. build javascript hash of skills object
@@ -70,12 +70,14 @@ Contact me at:
 firstname dot lastname @ gmail dot com
 -->
 
-<script type="text/javascript" src="lib/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="lib/jquery-1.8.3.js"></script>
 <script type="text/javascript" src="lib/jquery-ui-1.8.22.custom.min.js"></script>
 <script type="text/javascript" src="lib/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="lib/noty/layouts/top.js"></script>
 <script type="text/javascript" src="lib/noty/layouts/topRight.js"></script>
 <script type="text/javascript" src="lib/noty/themes/default.js"></script>
+<script type="text/javascript" src="lib/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="lib/jspdf/libs/FileSaver.js/FileSaver.js"></script>
 <script type="text/javascript" src="ncc.js"></script>
 <script type="text/javascript">
 	var hash = 
@@ -117,6 +119,14 @@ $(function() {
 
 <div id="character_info" class="box-white">
 	<p>
+		<label for="player_name">Player</label>
+		<input type="text" id="player_name" value="" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
+	</p>
+	<p>
+		<label for="character_name">Character</label>
+		<input type="text" id="character_name" value="" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
+	</p>
+	<p>
 		<label for="character_class">Class</label>
 		<select id="character_class" onchange="change_class(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
 			<option value="Fighter">Fighter</option>
@@ -127,25 +137,59 @@ $(function() {
 	</p>
 	<p>
 		<label for="race">Race</label>
-			<select id="race" onchange="change_race(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
+		<select id="race" onchange="change_race(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
 EORS
 
 yaml_skills["Races"].keys.each do |race|
 	if yaml_skills["Races"][race]["Default"]
 		page += "<option selected='true'>#{race}</option>\n"
-	else
+	elsif !yaml_skills["Races"][race]["Hidden"]
 		page += "<option>#{race}</option>\n"
 	end
 end
 
 page += <<-EORS
 
-			</select>
+		</select>
+	</p>
+	<p id="trait_p">
+		<label for="trait">Trait</label>
+		<select id="trait" onchange="change_trait(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
+			<option>Strong</option>
+			<option>Fast</option>
+			<option>Tradesman</option>
+			<option>Tough</option>
+			<option>Wild</option>
+			<option>Willful</option>
+			<option>Telepathic</option>
+			<option>Survivor</option>
+		</select>
+	</p>
+	<table id="abilities" onclick="$('#abilities_body').toggle();">
+		<thead><tr>
+			<th id="abilities_h">Racial Traits and Features</th>
+		</tr></thead>
+	
+		<tbody id="abilities_body">
+			<tr><td id="ability_0"></td></tr>
+			<tr><td id="ability_1"></td></tr>
+			<tr><td id="ability_2"></td></tr>
+		</tbody>
+		</table>
+	<p>
+		<label for="total_build">Build</label>
+		<input type="text" id="total_build" value="30" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
 	</p>
 	<p>
-		<label for="spent_build">Build</label>
+		<label for="spent_build">Spent</label>
 		<input type="text" id="spent_build" value="0" readonly="readonly" />
 	</p>
+	<p id="print_btn_p">
+		<input type="submit" value="PDF" id="print_btn" onclick="return generate_pdf()" />
+		<input type="submit" value="Email" id="email_btn" onclick="return mail_character()" />
+		<a href="#" style="display: none;" id="a_email" onclick="$('#a_email').hide()">Click to Send Email</a>
+	</p>
+
 </div><!-- character_info -->
 
 <h2 class="title">Spells</h2>
@@ -327,7 +371,10 @@ It utilizes skills from the <a href="http://www.nerolarp.com" target="_nat">NERO
 Corey's home chapter is <a href="http://www.neroindy.com" target="_in">NERO Indiana</a>.
 </p>
 <p>A desktop version of this app is maintained on <a href="http://www.github.com/corvec/NERO-Character-Creator" target="_git">gitHub</a>.</p>
+<p>This application is released under the terms of the <a href="http://www.gnu.org/licenses">GNU General Public License</a>, version 3.</p>
 </div><!--credits-->
+
+
 </div><!--content-->
 </div><!--sidebar-->
 
