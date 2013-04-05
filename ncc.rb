@@ -72,10 +72,10 @@ firstname dot lastname @ gmail dot com
 
 <script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="lib/jquery-ui-1.8.22.custom.min.js"></script>
-<script type="text/javascript" src="lib/noty/jquery.noty.js"></script>
-<script type="text/javascript" src="lib/noty/layouts/top.js"></script>
-<script type="text/javascript" src="lib/noty/layouts/topRight.js"></script>
-<script type="text/javascript" src="lib/noty/themes/default.js"></script>
+<script type="text/javascript" src="lib/noty/js/noty/jquery.noty.js"></script>
+<script type="text/javascript" src="lib/noty/js/noty/layouts/top.js"></script>
+<script type="text/javascript" src="lib/noty/js/noty/layouts/topRight.js"></script>
+<script type="text/javascript" src="lib/noty/js/noty/themes/default.js"></script>
 <script type="text/javascript" src="lib/jspdf/jspdf.js"></script>
 <script type="text/javascript" src="lib/jspdf/libs/FileSaver.js/FileSaver.js"></script>
 <script type="text/javascript" src="ncc.js"></script>
@@ -187,7 +187,9 @@ page += <<-EORS
 	<p id="print_btn_p">
 		<input type="submit" value="PDF" id="print_btn" onclick="return generate_pdf()" />
 		<input type="submit" value="Email" id="email_btn" onclick="return mail_character()" />
+		<input type="submit" value="Save" id="save_btn" onclick="return save_link()" />
 		<a href="#" style="display: none;" id="a_email" onclick="$('#a_email').hide()">Click to Send Email</a>
+		<a href="#" style="display: none;" id="a_save" onclick="$('#a_save').hide()">Save This Link</a>
 	</p>
 
 </div><!-- character_info -->

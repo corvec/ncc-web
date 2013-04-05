@@ -9,11 +9,6 @@
  * August 30, 2012
  */
 
-$(window).bind("load", function() {
-	update_abilities();
-	update_skill_cost();
-});
-
 var Notification = window.Notification = {};
 Notification.info = function(message, title) {
 	if (title != null) {
@@ -48,6 +43,14 @@ Notification.success = function(message, title) {
 		layout: 'topRight'
 	});
 }
+
+$(window).bind("load", function() {
+	set_params(parse_URL_params(window.location.toString()));
+	update_abilities();
+	update_skill_costs(); // calls update_skill_cost();
+	update_spelltree_cost(); // calls update_build_spent();
+});
+
 
 function interpret_keycode(event) {
 	var key_code
@@ -221,9 +224,23 @@ function add_skill(skill_name, skill_count) {
 		if (skill_name == window.current_skill) {
 			Notification.success("Added skill " + skill_name,
 							window.current_action);
-		} else {
-			Notification.info("Added prereq " + skill_name,
-							window.current_action);
+		} else { // Could also mean that they attempted to add or remove a skill. Check window.current_action also
+			if (window.current_action.indexOf("Adding") == 0 ) {
+				Notification.info("Added prereq " + skill_name,
+					window.current_action);
+			} else if (window.current_action.indexOf("Selling Back") == 0 ) {
+				// Need to say "sold back blah" 
+				if (cur_count > parseInt(row.cells[1].textContent)) {
+					Notification.info("Sold back a " + skill_name, window.current_action);
+				} else {// Need to throw an error if they try to decrement below 1
+					Notification.error("Cannot decrement a skill to below 1 - delete it instead.",
+						window.current_action);
+				}
+			} else if (window.current_action.indexOf("Buying ") == 0) {
+				Notification.info("Bought another " + skill_name, window.current_action);
+			
+			}
+
 		}
 		return true;
 	} else {
@@ -467,7 +484,7 @@ function add_spell(id) {
 	ensure_pyramid_left(id);
 	ensure_pyramid_right(id);
 
-	update_spelltree_cost();
+	update_spelltree_cost(); // calls update_build_spent();
 
 	Notification.success("Added " + window.current_skill,
 					window.current_action);
@@ -614,7 +631,7 @@ function del_spell(id) {
 	}
 
 	recursively_delete_skills(id);
-	update_spelltree_cost();
+	update_spelltree_cost(); // calls update_build_spent();
 
 
 }
@@ -635,7 +652,7 @@ function delete_spell(id) {
 function change_class() {
 	window.current_action = "Changing Class";
 	update_skill_costs();
-	update_spelltree_cost();
+	update_spelltree_cost(); // calls update_build_spent();
 	if (ary_contains(
 				hash["Races"][get_character_race()]["Prohibited Classes"],
 				get_character_class()))
@@ -677,7 +694,7 @@ function update_abilities() {
 function change_race() {
 	window.current_action = "Changing Race";
 	update_skill_costs();
-	update_spelltree_cost();
+	update_spelltree_cost(); // calls update_build_spent()
 
 	update_abilities();
 
@@ -796,7 +813,7 @@ function clear_spell_tree(school) {
 	ensure_pyramid_left(slot);
 	ensure_pyramid_right(slot);
 
-	update_spelltree_cost();
+	update_spelltree_cost(); // calls update_build_spent();
 	return true;
 }
 
@@ -1133,8 +1150,22 @@ function generate_pdf() {
 }
 
 function mail_character() {
-	var body = "";
-	body += "Player Name:\t" + document.getElementById('player_name').value + "\n";
+	var body = generate_email();
+	var addresses = "";
+	var subject = "My NERO Rewrite";
+	var href = "mailto:" + addresses + "?" + 
+		"subject=" + encodeURIComponent(subject) + "&" + 
+		"body=" + encodeURIComponent(body);
+	console.log(href);
+
+	$('#a_email').attr('href', href);
+	$('#a_email').show();
+
+	return false;
+}
+
+function generate_email() {
+	var body = "Player Name:\t" + document.getElementById('player_name').value + "\n";
 	body += "Character Name:\t" + document.getElementById('character_name').value + "\n";
 	body += "Class:\t" + get_character_class() + "\n";
 	body += "Race:\t" + get_character_race() + "\n";
@@ -1180,15 +1211,160 @@ function mail_character() {
 		body += "\n";
 	}
 
-	var addresses = "";
-	var subject = "My NERO Rewrite";
-	var href = "mailto:" + addresses + "?" + 
-		"subject=" + encodeURIComponent(subject) + "&" + 
-		"body=" + encodeURIComponent(body);
-	console.log(href);
+	return body;
+}
 
-	$('#a_email').attr('href', href);
-	$('#a_email').show();
+// http://stackoverflow.com/questions/814613/how-to-read-get-data-from-a-url-using-javascript#
+function parse_URL_params(url) {
+	var queryStart = url.indexOf("?") + 1;
+	var queryEnd   = url.indexOf("#") + 1 || url.length + 1;
+	var query      = url.slice(queryStart, queryEnd - 1);
+
+	if (query === url || query === "") return;
+
+	var params  = {};
+	var nvPairs = query.replace(/\+/g, " ").split("&");
+
+	for (var i=0; i<nvPairs.length; i++) {
+		var nv = nvPairs[i].split("=");
+		var n  = decodeURIComponent(nv[0]);
+		var v  = decodeURIComponent(nv[1]);
+		if ( !(n in params) ) {
+			params[n] = [];
+		}
+		params[n].push(nv.length === 2 ? v : null);
+	}
+	return params;
+}
+
+function save_link() {
+	var save_url = generate_url();
+
+	$('#a_save').attr('href', save_url);
+	$('#a_save').show();
 
 	return false;
 }
+
+
+function generate_url() {
+	var url = window.location.toString();
+	// strip params:
+	url = url.slice(0,url.indexOf('?')); // will return the url intact if there are no params
+
+	url += "?player=" + encodeURIComponent($('#player_name').val());
+	url += "&character=" + encodeURIComponent($('#character_name').val());
+	url += "&class=" + encodeURIComponent($('#character_class').val());
+	url += "&race=" + encodeURIComponent($('#race').val());
+	url += "&trait=" + encodeURIComponent($('#trait').val());
+	url += "&build=" + encodeURIComponent($('#total_build').val());
+	url += "&primary=" + encodeURIComponent(get_primary_school());
+	url += "&skills=" + encodeURIComponent(get_skill_list());
+	url += "&earth=" + encodeURIComponent(get_spell_tree('Earth'));
+	url += "&celestial=" + encodeURIComponent(get_spell_tree('Celestial'));
+	return url;
+}
+
+function get_skill_list() {
+	var skill_list = "";
+	var skills = document.getElementById("skill_table").rows;
+	for (var r = 0; r < skills.length; r++) {
+		var skill_name = skills[r].cells[2].textContent;
+		var skill_count = skills[r].cells[1].textContent;
+		skill_list += skill_count + "," + skill_name + ",";
+	}
+
+	return skill_list;
+
+}
+
+function get_spell_tree(school) {
+	var tree = "";
+
+	var pre = '#p_';
+	if (school != get_primary_school()) {
+		pre = '#s_';
+	}
+
+	for (var i = 1; i < 9; i++) {
+		tree += $(pre + i).text() + ',';
+	}
+	tree += $(pre + i).text();
+
+	console.log(tree);
+
+	return tree;
+}
+
+function set_params(params) {
+	for (param in params) {
+		switch (param) {
+			case 'player': //player name
+				$('#player_name').val(params[param]);
+				break;
+			case 'character': //character name
+				$('#character_name').val(params[param]);
+				break;
+			case 'class': //character class
+				$('#character_class').val(params[param]);
+				break;
+			case 'race': //race
+				$('#race').val(params[param]);
+				break;
+			case 'trait': //trait, if human
+				$('#trait').val(params[param]);
+				break;
+			case 'build': //build total
+				$('#total_build').val(params[param]);
+				break;
+			case 'primary': //primary school of magic
+				if (params[param] == 'Celestial') {
+					switch_schools();
+				}
+				break;
+			case 'skills': //skill list, like this - 1,One Handed Edged,1,Shield,5,Proficiency,2,Resist Sleep
+				set_skill_list(params[param]);
+				break;
+			case 'earth':
+				set_spell_tree('Earth',params[param]);
+				break;
+			case 'celestial':
+				set_spell_tree('Celestial',params[param]);
+				break;
+			default:
+				console.log(param + " = " + params[param]);
+				break;
+		}
+	}
+}
+
+function set_skill_list(skills) {
+	// Received in the format ["1,One Handed Edged,1,Shield,5,Proficiency,2,ResistSleep"]
+	skill_ary = skills[0].split(',');
+	for (var i = 0; i < skill_ary.length - 1; i += 2) {
+		// console.log("Adding " + skill_ary[i] + "x " + skill_ary[i+1]);
+		var skill_name = skill_ary[i+1];
+		var skill_data = hash["Skills"][skill_name];
+		var skill_count = parseInt(skill_ary[i]);
+		var cur_count = 0;
+		var row = null;
+		var skill_cost = 0;
+		add_skill_row(skill_name, skill_data, skill_count, cur_count, row, skill_cost);
+	}
+}
+
+function set_spell_tree(school, tree_s) {
+	// Received in the format ["3,2,1"]
+	var tree = tree_s[0].split(',');
+	var pre = "#p_";
+
+	if (school != get_primary_school()) {
+		pre = "#s_";
+	}
+
+	for (var i = 0; i < tree.length; i++) {
+		$(pre + (i+1)).text(tree[i]);
+		// console.log("$(#" + pre + (i+1) + ").text(" + tree[i] + ");");
+	}
+}
+
