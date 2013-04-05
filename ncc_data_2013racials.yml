@@ -1,8 +1,8 @@
 Races:
     Barbarian:
         Abilities:
-            - Strong
-            - Wild
+            - Strong (Mighty Slay, Strong Arm, Rip From Binding)
+            - Wild (Detect Magic, Dispel Magic, Battle Rage)
             - "Racial Weapon: Two Handed Weapons"
         Half Cost for Skills:
             - Racial Mighty Slay
@@ -13,8 +13,8 @@ Races:
             - Racial Battle Rage
     Biata:
         Abilities:
-            - Willful
-            - Telepathic
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
+            - Telepathic (Awaken, Calm, Break Charm)
             - "Racial Feature: Mentalist"
         Half Cost for Skills:
             - Racial Resist Sleep
@@ -25,8 +25,8 @@ Races:
             - Racial Break Charm
     Drae:
         Abilities:
-            - Fast
-            - Willful
+            - Fast (Light Touch, Dodge, Sneak Attack)
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
             - "Racial Weapon: Crossbows"
         Half Cost for Skills:
             - Racial Resist Sleep
@@ -37,8 +37,8 @@ Races:
             - Racial Sneak Attack
     Dwarf:
         Abilities:
-            - Tough
-            - Tradesman
+            - Tough (Resist Poison, Resist Physical, Toughness)
+            - Tradesman (Merchant, Harvester, Grand Master)
             - "Racial Weapon: Hammers"
         Half Cost for Skills:
             - Racial Resist Poison
@@ -49,8 +49,8 @@ Races:
             - Racial Grandmaster
     Elf:
         Abilities:
-            - Fast
-            - Willful
+            - Fast (Light Touch, Dodge, Sneak Attack)
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
             - "Racial Weapon: Bow"
         Half Cost for Skills:
             - Racial Resist Sleep
@@ -61,8 +61,8 @@ Races:
             - Racial Sneak Attack
     Gypsy:
         Abilities:
-            - Survivor
-            - Tradesman
+            - Survivor (Detect Poison/Antidote, Will to Live, Ready Armor)
+            - Tradesman (Merchant, Harvester, Grand Master)
             - "Racial Feature: Gypsy Curse"
         Half Cost for Skills:
             - Racial Merchant
@@ -73,8 +73,8 @@ Races:
             - Racial Ready Armor
     Half Ogre:
         Abilities:
-            - Strong
-            - Tough
+            - Strong (Mighty Slay, Strong Arm, Rip From Binding)
+            - Tough (Resist Poison, Resist Physical, Toughness)
             - "Racial Weapon: Two-Handed Weapons"
         Half Cost for Skills:
             - Racial Mighty Slay
@@ -85,8 +85,8 @@ Races:
             - Racial Toughness
     Half Orc:
         Abilities:
-            - Strong
-            - Wild
+            - Strong (Mighty Slay, Strong Arm, Rip From Binding)
+            - Wild (Detect Magic, Dispel Magic, Battle Rage)
             - "Racial Weapon: Axes"
         Half Cost for Skills:
             - Racial Mighty Slay
@@ -97,8 +97,8 @@ Races:
             - Racial Battle Rage
     Hobling:
         Abilities:
-            - Tough
-            - Fast
+            - Tough (Resist Poison, Resist Physical, Toughness)
+            - Fast (Light Touch, Dodge, Sneak Attack)
             - "Racial Weapon: Short Weapons"
         Half Cost for Skills:
             - Racial Resist Poison
@@ -172,8 +172,8 @@ Races:
             - Racial Ready Armor
     Mystic Wood Elf:
         Abilities:
-            - Willful
-            - Tradesman
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
+            - Tradesman (Merchant, Harvester, Grand Master)
             - "Racial Feature: Break Charm"
         Half Cost for Skills:
             - Racial Resist Sleep
@@ -186,8 +186,8 @@ Races:
             - Racial Break Charm
     Sarr:
         Abilities:
-            - Fast
-            - Survivor
+            - Fast (Light Touch, Dodge, Sneak Attack)
+            - Survivor (Detect Poison/Antidote, Will to Live, Ready Armor)
             - "Racial Weapon - Base 2 Claws"
         Half Cost for Skills:
             - Racial Detect Poison/Antidote
@@ -198,8 +198,8 @@ Races:
             - Racial Sneak Attack
     Scavenger:
         Abilities:
-            - Survivor
-            - Tough
+            - Survivor (Detect Poison/Antidote, Will to Live, Ready Armor)
+            - Tough (Resist Poison, Resist Physical, Toughness)
             - "Racial Weapon - Base 2 Claws"
         Half Cost for Skills:
             - Racial Detect Poison/Antidote
@@ -210,8 +210,8 @@ Races:
             - Racial Toughness
     Stone Elf:
         Abilities:
-            - Telepathic
-            - Willful
+            - Telepathic (Awaken, Calm, Break Charm)
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
             - "Racial Feature: Mentalist"
         Half Cost for Skills:
             - Racial Resist Sleep
@@ -222,8 +222,8 @@ Races:
             - Racial Break Charm
     Wild Elf:
         Abilities:
-            - Fast
-            - Wild
+            - Fast (Light Touch, Dodge, Sneak Attack)
+            - Wild (Detect Magic, Dispel Magic, Battle Rage)
             - "Racial Weapon: Bow"
         Half Cost for Skills:
             - Racial Light Touch

@@ -172,6 +172,9 @@ function add_skill_action(skill_name, skill_count) {
 		window.current_action = "Buying " + skill_name;
 	}
 	add_skill(skill_name, skill_count);
+	if (skill_count == -1) {
+		recursively_decrement_skills(skill_name);
+	}
 	update_build_spent();
 }
 
@@ -795,7 +798,31 @@ function recursively_delete_skills(deleted_skill_name) {
 				}
 			}
 		}
+	}
+}
 
+// Certain skills require a certain number of a skill per level
+// 1. Find skills that have their requirements set like that.
+// 2. If they require this skill, decrement them.
+// 3. Recurse
+function recursively_decrement_skills(decremented_skill_name) {
+	var skill_decremented_last_round = true;
+	while (skill_decremented_last_round) {
+		skill_decremented_last_round = false;
+		var skills = document.getElementById('skill_table').rows;
+		for (var r = 0; r < skills.length; r++) {
+			var skill_name = skills[r].cells[2].textContent;
+			if (is_this_numbered_prereq_not_met(
+						hash['Skills'][skill_name]['Requires'],
+						decremented_skill_name,
+						get_skill_count(skill_name))) {
+				skill_decremented_last_round = true;
+				recursively_decrement_skills(skill_name)
+				// Notification.info("Decremented skill " + skill_name,
+				// 		window.current_action);
+				add_skill(skill_name, -1);
+			}
+		}
 	}
 }
 
@@ -833,6 +860,15 @@ function is_at_least_one_prereq_not_met(prereqs, deleted_skill_name) {
 			if (is_prereq_not_met(prereq, deleted_skill_name)) {
 				return true;
 			}
+		}
+	}
+	return false;
+}
+
+function is_this_numbered_prereq_not_met(prereqs, deleted_skill_name, my_count) {
+	if (prereqs instanceof Object) {
+		if (prereqs.hasOwnProperty(deleted_skill_name)) {
+			return (prereqs[deleted_skill_name] * my_count > get_skill_count(deleted_skill_name) );
 		}
 	}
 	return false;
