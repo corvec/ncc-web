@@ -1165,7 +1165,7 @@ function mail_character() {
 	}
 	body += "\n";
 
-	body += "Skills:";
+	body += "Skills:\n";
 	var skills = document.getElementById('skill_table').children;
 	for (var i = 0; i < skills.length; i++) {
 		var skill_cost = skills.item(i).children.item(3).textContent;
