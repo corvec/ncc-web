@@ -436,7 +436,6 @@ function skill_includes_type(skill_name, skill_type) {
 }
 
 // Returns the number of a given skill or skill type purchased
-// Does not currently look at spells, but should
 function get_skill_count(skill_name) {
 	if (skill_name.substring(0,5) == "Earth") {
 		return get_slots("Earth", parseInt(skill_name.substring(6)));
@@ -1288,16 +1287,23 @@ function generate_url() {
 	// strip params:
 	url = url.slice(0,url.indexOf('?')); // will return the url intact if there are no params
 
-	url += "?player=" + encodeURIComponent($('#player_name').val());
-	url += "&character=" + encodeURIComponent($('#character_name').val());
-	url += "&class=" + encodeURIComponent($('#character_class').val());
+	url += "?class=" + $('#character_class').val();
 	url += "&race=" + encodeURIComponent($('#race').val());
-	url += "&trait=" + encodeURIComponent($('#trait').val());
-	url += "&build=" + encodeURIComponent($('#total_build').val());
-	url += "&primary=" + encodeURIComponent(get_primary_school());
+	if ($('#player_name').val().length > 0)
+		url += "&player=" + encodeURIComponent($('#player_name').val());
+	if ($('#character_name').val().length > 0)
+		url += "&character=" + encodeURIComponent($('#character_name').val());
+	if (get_character_race() == 'Human')
+		url += "&trait=" + encodeURIComponent($('#trait').val());
+	if (get_character_total_build() != 30)
+		url += "&build=" + encodeURIComponent($('#total_build').val());
+	if (get_primary_school() != 'Earth')
+		url += "&primary=" + encodeURIComponent(get_primary_school());
 	url += "&skills=" + encodeURIComponent(get_skill_list());
-	url += "&earth=" + encodeURIComponent(get_spell_tree('Earth'));
-	url += "&celestial=" + encodeURIComponent(get_spell_tree('Celestial'));
+	if (get_slots('Earth', 1) > 0)
+		url += "&earth=" + encodeURIComponent(get_spell_tree('Earth'));
+	if (get_slots('Celestial', 1) > 0)
+		url += "&celestial=" + encodeURIComponent(get_spell_tree('Celestial'));
 	return url;
 }
 
@@ -1315,6 +1321,19 @@ function get_skill_list() {
 }
 
 function get_spell_tree(school) {
+	var tree = "";
+
+	for (var i = 1; i < 9 && get_slots(school, i+1); i++) {
+		tree += get_slots(school, i) + ',';
+	}
+	tree += get_slots(school, i);
+
+	console.log(tree);
+
+	return tree;
+}
+
+function get_spell_tree_old(school) {
 	var tree = "";
 
 	var pre = '#p_';
