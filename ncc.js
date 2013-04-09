@@ -1197,11 +1197,13 @@ function generate_pdf() {
 		var x = 10;
 		var y = 145 + (i*5);
 		var max_chars_per_line = 100;
+		var note_font_size = 11;
 		if (skills.length > 20) {
 			console.log("Character has more than 20 skills; displaying notes offset to the right.")
-			x = 105;
+			x = 100;
 			y = 125;
 			max_chars_per_line = 50;
+			note_font_size = 10;
 		}
 		var notes_ary = notes.split("\n");
 		for (var i = 0; i < notes_ary.length; i++) {
@@ -1222,9 +1224,9 @@ function generate_pdf() {
 		doc.setFontSize(16);
 		doc.setFontStyle('bold');
 		doc.text(x, y, 'Notes:');
-		doc.setFontSize(12);
+		doc.setFontSize(note_font_size);
 		doc.setFontStyle('normal');
-		doc.text(x, y+10, parsed_notes);
+		doc.text(x+5, y+5, parsed_notes);
 	}
 
 	var subject = get_character_race() + " " + get_character_class();
