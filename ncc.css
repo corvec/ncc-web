@@ -77,6 +77,11 @@ color: #fff;border-radius: 5px;border: 1px solid #6d6d6d;font-size: 12px;left: 3
 #abilities_h { padding-left: 10px !important; }
 #abilities_body tr td { padding-left: 20px !important; }
 
+#notes {
+	width: 100%;
+	display: block;
+}
+
 
 /* Links */
 a {color:#0085d5;text-decoration:none;-webkit-touch-callout: none;}

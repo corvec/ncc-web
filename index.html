@@ -22,6 +22,7 @@ firstname dot lastname @ gmail dot com
 
 <script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="lib/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="lib/autoresize.jquery.js"></script>
 <script type="text/javascript" src="lib/noty/js/noty/jquery.noty.js"></script>
 <script type="text/javascript" src="lib/noty/js/noty/layouts/top.js"></script>
 <script type="text/javascript" src="lib/noty/js/noty/layouts/topRight.js"></script>
@@ -310,6 +311,14 @@ $(function() {
 	</tr></thead>
 	<tbody id="skill_table"></tbody>
 </table>
+
+<div class="box-white">
+	<p><textarea id="notes" placeholder="Notes..." onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;"></textarea></p>
+	<!--
+		<p><label for="notes1">Notes:</label><input type="text" id="notes1" /></p>
+	-->
+</div>
+
 
 
 

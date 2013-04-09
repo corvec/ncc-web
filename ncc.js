@@ -45,6 +45,7 @@ Notification.success = function(message, title) {
 }
 
 $(window).bind("load", function() {
+	$('#notes').autoResize();
 	set_params(parse_URL_params(window.location.toString()));
 	update_abilities();
 	update_skill_costs(); // calls update_skill_cost();
@@ -1191,6 +1192,14 @@ function generate_pdf() {
 		console.log(skill_cost + " - " + skill_count + "x " + skill_name);
 	}
 
+	var notes = $('#notes').val()
+	if (notes.length > 0) {
+		doc.setFontStyle('bold');
+		doc.text(10, 145 + (i*5), 'Notes:');
+		doc.setFontStyle('normal');
+		doc.text(10, 150 + (i*5), notes);
+	}
+
 	var subject = get_character_race() + " " + get_character_class();
 	if (document.getElementById('character_name').value.length > 0) { 
 		subject = document.getElementById('character_name').value + ' - ' + subject;
@@ -1278,6 +1287,14 @@ function generate_email() {
 		body += "\n";
 	}
 
+
+	var notes = $('#notes').val()
+	if (notes.length > 0) {
+		body += "\n";
+		body += "Notes:\n";
+		body += notes;
+	}
+
 	return body;
 }
 
@@ -1336,6 +1353,9 @@ function generate_url() {
 		url += "&earth=" + encodeURIComponent(get_spell_tree('Earth'));
 	if (get_slots('Celestial', 1) > 0)
 		url += "&celestial=" + encodeURIComponent(get_spell_tree('Celestial'));
+	var notes = $('#notes').val();
+	if (notes.length > 0)
+		url += "&notes=" + encodeURIComponent(notes);
 	return url;
 }
 
@@ -1399,6 +1419,9 @@ function set_params(params) {
 				break;
 			case 'celestial':
 				set_spell_tree('Celestial',params[param]);
+				break;
+			case 'notes':
+				$('#notes').val(params[param]);
 				break;
 			default:
 				console.log(param + " = " + params[param]);
