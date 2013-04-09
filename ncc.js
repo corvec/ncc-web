@@ -228,7 +228,8 @@ function add_skill(skill_name, skill_count) {
 			Notification.success("Added skill " + skill_name,
 							window.current_action);
 		} else { // Could also mean that they attempted to add or remove a skill. Check window.current_action also
-			if (window.current_action.indexOf("Adding") == 0 ) {
+			if (window.current_action == null) {
+			} else if (window.current_action.indexOf("Adding") == 0 ) {
 				Notification.info("Added prereq " + skill_name,
 					window.current_action);
 			} else if (window.current_action.indexOf("Selling Back") == 0 ) {
@@ -979,6 +980,13 @@ function get_character_body() {
 	return body_data["Base Body"] + get_character_level() * body_data["Body Per Level"];
 }
 
+function get_max_armor() {
+	var max_armor = { 'Fighter': 25, 'Templar': 20, 'Rogue': 20, 'Scholar': 15 }[get_character_class()];
+	max_armor += 5 * get_skill_count('Wear Extra Armor');
+	
+	return max_armor;
+}
+
 function get_character_level() {
 	return Math.floor((get_character_total_build() - 5) / 10);
 }
@@ -1097,11 +1105,13 @@ function generate_pdf() {
 	window.current_action = "Generating a PDF";
 	var doc = new jsPDF();
 	doc.setFontSize(40);
+	doc.setFont('times');
 	doc.text(58, 25, "NERO Rewrite");
 	doc.setFontSize(12);
 	doc.setTextColor(0,0,255);
 	doc.text(88, 30, "coreykump.com/ncc");
 	doc.setTextColor(0,0,0);
+	doc.setFont('helvetica');
 	doc.setFontStyle("bold");
 	doc.text(10, 40, "Player:");
 	doc.text(10, 45, "Character:");
@@ -1109,9 +1119,10 @@ function generate_pdf() {
 	doc.text(10, 55, "Race:");
 	doc.text(10, 60, "Feature:");
 	doc.text(10, 65, "Level:");
-	doc.text(10, 70, "Body:");
-	doc.text(10, 75, "Build:");
-	doc.text(10, 80, "Spent:");
+	doc.text(65, 70, "Body:");
+	doc.text(65, 75, "Max Armor:");
+	doc.text(10, 70, "Build:");
+	doc.text(10, 75, "Spent:");
 
 	doc.setFontStyle("normal");
 	doc.text(40, 40, document.getElementById('player_name').value);
@@ -1120,9 +1131,10 @@ function generate_pdf() {
 	doc.text(40, 55, get_character_race());
 	doc.text(40, 60, get_character_feature());
 	doc.text(40, 65, get_character_level().toString());
-	doc.text(40, 70, get_character_body().toString());
-	doc.text(40, 75, get_character_total_build().toString());
-	doc.text(40, 80, document.getElementById('spent_build').value);
+	doc.text(95, 70, get_character_body().toString());
+	doc.text(95, 75, get_max_armor().toString());
+	doc.text(40, 70, get_character_total_build().toString());
+	doc.text(40, 75, document.getElementById('spent_build').value);
 	
 	doc.setFontSize(16);
 	doc.setFontStyle("bold");
@@ -1179,7 +1191,26 @@ function generate_pdf() {
 		console.log(skill_cost + " - " + skill_count + "x " + skill_name);
 	}
 
-	doc.save("NERO_Character.pdf");
+	var subject = get_character_race() + " " + get_character_class();
+	if (document.getElementById('character_name').value.length > 0) { 
+		subject = document.getElementById('character_name').value + ' - ' + subject;
+	}
+	if (document.getElementById('player_name').value.length > 0) {
+		subject = document.getElementById('player_name').value + ' - ' + subject;
+	}
+
+	doc.setProperties({
+			title: 'NERO Rewrite',
+			subject: subject,
+			author: document.getElementById('player_name').value,
+			keywords: 'NERO, LARP, Role-Playing',
+			creator: 'coreykump.com'
+	});
+
+	var filename = 'NERO Character - ' + subject + '.pdf';
+
+	doc.save(filename);
+		
 	Notification.success("PDF Generated", window.current_action);
 	return false;
 }
@@ -1208,6 +1239,7 @@ function generate_email() {
 
 	body += "Level:\t" + get_character_level().toString() + "\n";
 	body += "Body:\t" + get_character_body().toString() + "\n";
+	body += "Max Armor:\t" + get_max_armor().toString() + "\n";
 	body += "Build:\t" + document.getElementById('total_build').value  + "\n";
 	body += "Spent:\t" + document.getElementById('spent_build').value + "\n";
 	body += "\n";
@@ -1333,24 +1365,6 @@ function get_spell_tree(school) {
 	return tree;
 }
 
-function get_spell_tree_old(school) {
-	var tree = "";
-
-	var pre = '#p_';
-	if (school != get_primary_school()) {
-		pre = '#s_';
-	}
-
-	for (var i = 1; i < 9; i++) {
-		tree += $(pre + i).text() + ',';
-	}
-	tree += $(pre + i).text();
-
-	console.log(tree);
-
-	return tree;
-}
-
 function set_params(params) {
 	for (param in params) {
 		switch (param) {
@@ -1394,7 +1408,7 @@ function set_params(params) {
 }
 
 function set_skill_list(skills) {
-	// Received in the format ["1,One Handed Edged,1,Shield,5,Proficiency,2,ResistSleep"]
+	// Received in the format ["1,One Handed Edged,1,Shield,5,Proficiency,2,Resist Sleep"]
 	skill_ary = skills[0].split(',');
 	for (var i = 0; i < skill_ary.length - 1; i += 2) {
 		// console.log("Adding " + skill_ary[i] + "x " + skill_ary[i+1]);
@@ -1404,7 +1418,10 @@ function set_skill_list(skills) {
 		var cur_count = 0;
 		var row = null;
 		var skill_cost = 0;
-		add_skill_row(skill_name, skill_data, skill_count, cur_count, row, skill_cost);
+		if (skill_name in hash['Skills'])
+			add_skill_row(skill_name, skill_data, skill_count, cur_count, row, skill_cost);
+		else
+			Notification.error('Cannot add skill ' + skill_name, 'Loading Error')
 	}
 }
 
