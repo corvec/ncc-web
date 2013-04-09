@@ -1155,7 +1155,7 @@ function generate_pdf() {
 	for(var i = 0; i < rows.length; i++) {
 		var row = rows[i];
 		var tree = trees[i];
-		console.log(row + tree);
+		// console.log(row + tree);
 		var range = ["1","2","3","0","4","5","6","0","7","8","9"];
 
 		for(var j = 0; j < range.length; j++) {
@@ -1166,7 +1166,7 @@ function generate_pdf() {
 				doc.text(40+5*j, row, range[j]);
 				doc.setFontStyle("normal");
 				doc.text(40+5*j, row+5, document.getElementById(tree + range[j]).textContent);
-				console.log(document.getElementById(tree + range[j]).textContent);
+				// console.log(document.getElementById(tree + range[j]).textContent);
 			}
 		}
 		doc.text(105, row, "Cost");
@@ -1189,15 +1189,42 @@ function generate_pdf() {
 		} else {
 			doc.text(40, 135 + (i * 5), skill_name);
 		}
-		console.log(skill_cost + " - " + skill_count + "x " + skill_name);
+		// console.log(skill_cost + " - " + skill_count + "x " + skill_name);
 	}
 
 	var notes = $('#notes').val()
 	if (notes.length > 0) {
+		var x = 10;
+		var y = 145 + (i*5);
+		var max_chars_per_line = 100;
+		if (skills.length > 20) {
+			console.log("Character has more than 20 skills; displaying notes offset to the right.")
+			x = 105;
+			y = 125;
+			max_chars_per_line = 50;
+		}
+		var notes_ary = notes.split("\n");
+		for (var i = 0; i < notes_ary.length; i++) {
+			if (notes_ary[i].length - 1 > max_chars_per_line) {
+				var new_line = '';
+				for (var j = 0; j < notes_ary[i].length / max_chars_per_line; j++) {
+					if (j > 0) {
+					 	new_line += "-\n  ";
+					}
+					new_line += notes_ary[i].substring(j*max_chars_per_line, (j+1)*max_chars_per_line);
+				}
+				notes_ary[i] = new_line;
+			}
+			notes_ary[i] += "\n";
+		}
+		var parsed_notes = notes_ary.join("");
+
+		doc.setFontSize(16);
 		doc.setFontStyle('bold');
-		doc.text(10, 145 + (i*5), 'Notes:');
+		doc.text(x, y, 'Notes:');
+		doc.setFontSize(12);
 		doc.setFontStyle('normal');
-		doc.text(10, 150 + (i*5), notes);
+		doc.text(x, y+10, parsed_notes);
 	}
 
 	var subject = get_character_race() + " " + get_character_class();
