@@ -211,6 +211,10 @@ function add_skill(skill_name, skill_count) {
 		if (hash["Skills"][skill_name]["Racial"]) {
 			Notification.error("This skill is a racial skill",
 								"Error Adding Skill");
+		} else {
+			Notification.error("This skill does not have a cost defined for you",
+								"Error Adding Skill");
+		
 		}
 		return false;
 	}
@@ -961,7 +965,8 @@ function get_character_race() {
 }
 
 function get_character_feature() {
-	if (hash["Races"][get_character_race()]["Super Race"]) {
+	var race = document.getElementById('race').value;
+	if (hash["Races"][race]["Super Race"]) {
 		return "None";
 	}
 	return document.getElementById('ability_2').innerHTML;
@@ -1382,7 +1387,7 @@ function generate_url() {
 		url += "&player=" + encodeURIComponent($('#player_name').val());
 	if ($('#character_name').val().length > 0)
 		url += "&character=" + encodeURIComponent($('#character_name').val());
-	if (get_character_race() == 'Human')
+	if ($('#race').val() == 'Human')
 		url += "&trait=" + encodeURIComponent($('#trait').val());
 	if (get_character_total_build() != 30)
 		url += "&build=" + encodeURIComponent($('#total_build').val());

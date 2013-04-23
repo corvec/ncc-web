@@ -193,8 +193,6 @@ Skills:
             - Weapon
         Options:
             - Hand
-        Includes:
-            Back Attack: 4
         Cost:
             Fighter: 30
             Rogue: 15
@@ -406,8 +404,7 @@ Skills:
         Options:
             - Hand
         Includes:
-            Master Critical Attack: 4
-            Proficiency: 1
+            - Proficiency
         Cost:
             Fighter: 17
             Rogue: 24
@@ -469,8 +466,6 @@ Skills:
             Scholar: 2
             Templar: 3
     Proficiency:
-        Includes:
-            Critical Attack: 4
         Requires:
             - Weapon
         Max: 0
