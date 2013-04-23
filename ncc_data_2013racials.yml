@@ -4,6 +4,8 @@ Races:
             - Strong (Mighty Slay, Strong Arm, Rip From Binding)
             - Wild (Detect Magic, Dispel Magic, Battle Rage)
             - "Racial Weapon: Two Handed Weapons"
+        Include:
+            - Two Handed Weapon Master
         Half Cost for Skills:
             - Racial Mighty Slay
             - Racial Strong Arm
@@ -28,6 +30,8 @@ Races:
             - Fast (Light Touch, Dodge, Sneak Attack)
             - Willful (Resist Sleep, Resist Charm, Remove Fear)
             - "Racial Weapon: Crossbows"
+        Include:
+            - Archery
         Half Cost for Skills:
             - Racial Resist Sleep
             - Racial Resist Charm
@@ -40,6 +44,9 @@ Races:
             - Tough (Resist Poison, Resist Physical, Toughness)
             - Tradesman (Merchant, Harvester, Grand Master)
             - "Racial Weapon: Hammers"
+        Include:
+            - One Handed Blunt
+            - Two Handed Blunt
         Half Cost for Skills:
             - Racial Resist Poison
             - Racial Resist Physical
@@ -52,6 +59,8 @@ Races:
             - Fast (Light Touch, Dodge, Sneak Attack)
             - Willful (Resist Sleep, Resist Charm, Remove Fear)
             - "Racial Weapon: Bow"
+        Include:
+            - Archery
         Half Cost for Skills:
             - Racial Resist Sleep
             - Racial Resist Charm
@@ -76,6 +85,8 @@ Races:
             - Strong (Mighty Slay, Strong Arm, Rip From Binding)
             - Tough (Resist Poison, Resist Physical, Toughness)
             - "Racial Weapon: Two-Handed Weapons"
+        Include:
+            - Two Handed Weapon Master
         Half Cost for Skills:
             - Racial Mighty Slay
             - Racial Strong Arm
@@ -88,6 +99,9 @@ Races:
             - Strong (Mighty Slay, Strong Arm, Rip From Binding)
             - Wild (Detect Magic, Dispel Magic, Battle Rage)
             - "Racial Weapon: Axes"
+        Include:
+            - One Handed Edged
+            - Polearm
         Half Cost for Skills:
             - Racial Mighty Slay
             - Racial Strong Arm
@@ -100,6 +114,8 @@ Races:
             - Tough (Resist Poison, Resist Physical, Toughness)
             - Fast (Light Touch, Dodge, Sneak Attack)
             - "Racial Weapon: Short Weapons"
+        Include:
+            - One Handed Weapon
         Half Cost for Skills:
             - Racial Resist Poison
             - Racial Resist Physical
@@ -225,6 +241,8 @@ Races:
             - Fast (Light Touch, Dodge, Sneak Attack)
             - Wild (Detect Magic, Dispel Magic, Battle Rage)
             - "Racial Weapon: Bow"
+        Include:
+            - Archery
         Half Cost for Skills:
             - Racial Light Touch
             - Racial Dodge

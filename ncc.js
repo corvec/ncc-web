@@ -211,10 +211,6 @@ function add_skill(skill_name, skill_count) {
 		if (hash["Skills"][skill_name]["Racial"]) {
 			Notification.error("This skill is a racial skill",
 								"Error Adding Skill");
-		} else {
-			Notification.error("This skill does not have a cost defined for you",
-								"Error Adding Skill");
-		
 		}
 		return false;
 	}
@@ -430,15 +426,32 @@ function skill_includes_type(skill_name, skill_type) {
 	var include_list = hash["Skills"][skill_name]["Includes"];
 	if (include_list == null) {
 		return false;
-	} else {
-		for (var i = 0; i < include_list.length; i++) {
-			if (include_list[i] == skill_type ||
-				skill_includes_type(include_list[i], skill_type)) {
-				return true;
-			}
+	}
+	for (var i = 0; i < include_list.length; i++) {
+		if (include_list[i] == skill_type ||
+			skill_includes_type(include_list[i], skill_type)) {
+			return true;
 		}
 	}
 	return false;
+}
+
+function race_includes(skill_type) {
+	if (hash["Skills"][skill_type] == null) {
+		return false;
+	}
+	var include_list = hash["Races"][get_character_race()]["Include"];
+	if (include_list == null) {
+		return false;
+	}
+	for (var i = 0; i < include_list.length; i++) {
+		if (include_list[i] == skill_type ||
+			skill_includes_type(include_list[i], skill_type)) {
+			return true;
+		}
+	}
+	return false;
+
 }
 
 // Returns the number of a given skill or skill type purchased
@@ -447,6 +460,10 @@ function get_skill_count(skill_name) {
 		return get_slots("Earth", parseInt(skill_name.substring(6)));
 	} else if (skill_name.substring(0,9) == "Celestial") {
 		return get_slots("Celestial", parseInt(skill_name.substring(10)));
+	} else if (skill_name.substring(3,17) == " Handed Weapon") {
+		if (race_includes(skill_name)) {
+			return get_skill_count('Weapon');
+		}
 	}
 	var row = skill_row(skill_name);
 	if (row == null) {
@@ -1379,7 +1396,8 @@ function save_link() {
 function generate_url() {
 	var url = window.location.toString();
 	// strip params:
-	url = url.slice(0,url.indexOf('?')); // will return the url intact if there are no params
+	if (url.indexOf('?') > -1)
+		url = url.slice(0,url.indexOf('?'));
 
 	url += "?class=" + $('#character_class').val();
 	url += "&race=" + encodeURIComponent($('#race').val());
