@@ -817,12 +817,16 @@ function recursively_delete_skills(deleted_skill_name) {
 	while (skill_deleted_last_round) {
 		skill_deleted_last_round = false;
 		var skills = document.getElementById("skill_table").rows;
+		// for each row in the skill table
 		for (var r = 0; r < skills.length; r++) {
+			// look up the skill
 			var skill_name = skills[r].cells[2].textContent;
+			// and if at least one of its prereqs is no longer met
 			if (is_at_least_one_prereq_not_met(
 					hash["Skills"][skill_name]["Requires"],
 					deleted_skill_name))
 			{
+				// delete it
 				Notification.info("Removed skill " + skill_name,
 								window.current_action);
 				document.getElementById("skill_table").deleteRow(r);
@@ -894,8 +898,9 @@ function clear_spell_tree(school) {
 	return true;
 }
 
+// Determine if at least one prereq is no longer met
+// Called when deleting skills
 function is_at_least_one_prereq_not_met(prereqs, deleted_skill_name) {
-	//console.log("is_at_least_one_prereq_not_met " + prereqs + ", " + deleted_skill_name);
 	if (prereqs == null) {
 		return false;
 	}
@@ -926,6 +931,7 @@ function is_this_numbered_prereq_not_met(prereqs, deleted_skill_name, my_count) 
 
 // return true if the passed prereq is not met
 function is_prereq_not_met(prereq, deleted_skill_name) {
+	// This is not necessarily true:
 	if (prereq == deleted_skill_name) {
 		return true;
 	}
