@@ -465,11 +465,15 @@ function get_skill_count(skill_name) {
 			return get_skill_count('Weapon');
 		}
 	}
+	var count = 0;
+
+	count += get_type_count(skill_name);
+
 	var row = skill_row(skill_name);
-	if (row == null) {
-		return get_type_count(skill_name);
+	if (row != null) {
+		count += parseInt(row.cells[1].textContent);
 	}
-	return parseInt(row.cells[1].textContent);
+	return count;
 }
 
 // Deletes a skill row and updates the table
