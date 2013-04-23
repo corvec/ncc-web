@@ -176,6 +176,12 @@ function add_skill_action(skill_name, skill_count) {
 	add_skill(skill_name, skill_count);
 	if (skill_count == -1) {
 		recursively_decrement_skills(skill_name);
+		// This is specifically needed for master profs
+		var includes = hash.Skills[skill_name].Includes;
+		if (includes == null) includes = {};
+		for (var i = 0; i < includes.length; i++) {
+			recursively_decrement_skills(includes[i]);
+		}
 	}
 	update_build_spent();
 }
@@ -224,7 +230,7 @@ function add_skill(skill_name, skill_count) {
 		cur_count = parseInt(row.cells[1].textContent);
 	}
 
-	if (skill_data["Requires"] != null) {
+	if (skill_count > 0 && skill_data["Requires"] != null) {
 		var actual_count = cur_count;
 		if (skill_count > 0)
 			actual_count = get_skill_count(skill_name);
@@ -497,6 +503,13 @@ function delete_skill(id) {
 	console.log("delete_skill " + id);
 	document.getElementById("skill_table").deleteRow(document.getElementById(id).rowIndex - 1);
 	recursively_delete_skills(skill_name);
+
+	var includes = hash.Skills[skill_name].Includes;
+	if (includes != null) {
+		for (var i = 0; i < includes.length; i++) {
+			recursively_delete_skills(includes[i]);
+		}
+	}
 
 	Notification.success("Removed skill " + skill_name, window.current_action);
 
@@ -822,16 +835,22 @@ function recursively_delete_skills(deleted_skill_name) {
 			// look up the skill
 			var skill_name = skills[r].cells[2].textContent;
 			// and if at least one of its prereqs is no longer met
+			var prereqs = hash.Skills[skill_name].Requires;
+			var skill_count = get_skill_count(skill_name);
 			if (is_at_least_one_prereq_not_met(
-					hash["Skills"][skill_name]["Requires"],
-					deleted_skill_name))
+					prereqs, deleted_skill_name, skill_count))
 			{
-				// delete it
-				Notification.info("Removed skill " + skill_name,
-								window.current_action);
-				document.getElementById("skill_table").deleteRow(r);
-				skill_deleted_last_round = true;
-				break;
+				if (!prereqs instanceof Object) {
+					// delete it
+					Notification.info("Removed skill " + skill_name,
+									window.current_action);
+					document.getElementById("skill_table").deleteRow(r);
+					skill_deleted_last_round = true;
+					break;
+				} else {
+					// decrement it
+					recursively_decrement_skills(deleted_skill_name);
+				}
 			}
 		}
 		for (var i = 0; i < get_schools().length; i++) {
@@ -871,10 +890,15 @@ function recursively_decrement_skills(decremented_skill_name) {
 						decremented_skill_name,
 						get_skill_count(skill_name))) {
 				skill_decremented_last_round = true;
-				recursively_decrement_skills(skill_name)
 				// Notification.info("Decremented skill " + skill_name,
 				// 		window.current_action);
-				add_skill(skill_name, -1);
+				while (is_this_numbered_prereq_not_met(
+						hash['Skills'][skill_name]['Requires'],
+						decremented_skill_name,
+						get_skill_count(skill_name))) {
+					add_skill(skill_name, -1);
+				}
+				recursively_decrement_skills(skill_name)
 			}
 		}
 	}
@@ -900,7 +924,7 @@ function clear_spell_tree(school) {
 
 // Determine if at least one prereq is no longer met
 // Called when deleting skills
-function is_at_least_one_prereq_not_met(prereqs, deleted_skill_name) {
+function is_at_least_one_prereq_not_met(prereqs, deleted_skill_name, skill_count) {
 	if (prereqs == null) {
 		return false;
 	}
@@ -911,11 +935,12 @@ function is_at_least_one_prereq_not_met(prereqs, deleted_skill_name) {
 			}
 		}
 	} else if (prereqs instanceof Object) {
-		for (var prereq in prereqs) {
-			if (is_prereq_not_met(prereq, deleted_skill_name)) {
+		// for (var prereq in prereqs) {
+			// if (is_prereq_not_met(prereq, deleted_skill_name)) {
+			if (is_this_numbered_prereq_not_met(prereqs, deleted_skill_name, skill_count)) {
 				return true;
 			}
-		}
+		// }
 	}
 	return false;
 }
@@ -932,6 +957,7 @@ function is_this_numbered_prereq_not_met(prereqs, deleted_skill_name, my_count) 
 // return true if the passed prereq is not met
 function is_prereq_not_met(prereq, deleted_skill_name) {
 	// This is not necessarily true:
+	// TODO
 	if (prereq == deleted_skill_name) {
 		return true;
 	}
