@@ -164,6 +164,7 @@ function add_selected_skill() {
 	return false; // so that the submit button doesn't reload the page
 }
 
+// This function is triggered by the user
 function add_skill_action(skill_name, skill_count) {
 	if (skill_count == -1) {
 		window.current_action = "Selling Back 1x " + skill_name;
@@ -179,10 +180,9 @@ function add_skill_action(skill_name, skill_count) {
 	update_build_spent();
 }
 
-// Adds the passed skill. Called by add_prereq() and by add_selected_skill()
+// Adds the passed skill. Called by add_prereq(), by add_selected_skill(),
+// and by add_skill_action()
 function add_skill(skill_name, skill_count) {
-	//console.log("add_skill " + skill_name + ", " + skill_count);
-
 	var skill_data = hash["Skills"][skill_name];
 	if (skill_data == null) {
 		// Spells:
@@ -196,6 +196,7 @@ function add_skill(skill_name, skill_count) {
 				return true;
 			}
 		}
+		// Upon attempting to add a skill with "Level: 5" as a prereq
 		if (skill_name == "Level") {
 			Notification.info("This skill is limited to one per " +
 					skill_count + 
@@ -204,6 +205,8 @@ function add_skill(skill_name, skill_count) {
 					" Prereq");
 			return true;
 		}
+		// Indicate that there was some issue adding this skill
+		// (the skill data wasn't found).
 		return false;
 	}
 	var skill_cost = get_skill_cost( skill_name, get_character_class(), get_character_race() );
@@ -222,7 +225,10 @@ function add_skill(skill_name, skill_count) {
 	}
 
 	if (skill_data["Requires"] != null) {
-		add_prereqs(skill_data["Requires"], skill_count + cur_count);
+		var actual_count = cur_count;
+		if (skill_count > 0)
+			actual_count = get_skill_count(skill_name);
+		add_prereqs(skill_data["Requires"], skill_count + actual_count);
 	}
 	if (add_skill_row(skill_name, skill_data, skill_count, cur_count, row, skill_cost)) {
 		if (skill_name == window.current_skill) {
@@ -238,8 +244,14 @@ function add_skill(skill_name, skill_count) {
 				if (cur_count > parseInt(row.cells[1].textContent)) {
 					Notification.info("Sold back a " + skill_name, window.current_action);
 				} else {// Need to throw an error if they try to decrement below 1
-					Notification.error("Cannot decrement a skill to below 1 - delete it instead.",
-						window.current_action);
+					// Prohibit deleting the last of a skill outright, but not deleting prereqs that require more
+					// than 1 of a skill
+					if (window.current_action.contains(skill_name)) {
+						Notification.error("Cannot decrement a skill to below 1 - delete it instead.",
+							window.current_action);
+					} else {
+						delete_skill_by_name(skill_name);
+					}
 				}
 			} else if (window.current_action.indexOf("Buying ") == 0) {
 				Notification.info("Bought another " + skill_name, window.current_action);
@@ -385,7 +397,7 @@ function add_prereq(skill_name, count) {
 	//console.log("add prereq " + skill_name +  "; cur_count = " + cur_count);
 	if (cur_count < count) {
 		if (!add_skill(skill_name, count - cur_count)) {
-			Notification.error("Could not add " + skill_name + " (prereq)",
+			Notification.error("Could not automatically add prerequisite skill, " + skill_name,
 					window.current_action);
 			return false;
 		}
@@ -490,6 +502,18 @@ function delete_skill(id) {
 
 	update_build_spent();
 	return false;
+}
+
+function delete_skill_by_name(skill_name) {
+	var id = "skill_" + skill_name;
+	console.log("delete_skill_by_name " + skill_name);
+	document.getElementById("skill_table").deleteRow(document.getElementById(id).rowIndex - 1);
+	recursively_delete_skills(skill_name);
+
+	Notification.success("Removed skill " + skill_name, window.current_action);
+
+	update_build_spent();
+	return true;
 }
 
 // Adds a slot to the given level

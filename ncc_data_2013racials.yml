@@ -798,9 +798,9 @@ Skills:
         Cost: 2
         Max: 0
         Requires:
-            Stop Thrust, Free: 0
+            Stop Thrust (Free): 0
             Proficiency: 2
-    Stop Thrust, Free:
+    Stop Thrust (Free):
         Cost: 0
         Requires:
             Two Handed Weapon: 0
