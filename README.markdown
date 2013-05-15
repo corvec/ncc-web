@@ -1,5 +1,5 @@
-NCC Web, or NERO Character Creator for the Web
-==============================================
+NERO Character Creator for the Web
+==================================
 
 This web app is designed to be usable from mobile phones, tablets, or from the desktop. 
 
