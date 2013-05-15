@@ -496,11 +496,11 @@ function get_skill_count(skill_name) {
 
 // Deletes a skill row and updates the table
 function delete_skill(id) {
+	console.log("delete_skill(" + id + ")");
 	var skill_name = document.getElementById(id).cells[2].textContent;
 	window.current_skill = skill_name;
 	window.current_action = "Removing " + skill_name;
 
-	console.log("delete_skill " + id);
 	document.getElementById("skill_table").deleteRow(document.getElementById(id).rowIndex - 1);
 	recursively_delete_skills(skill_name);
 
@@ -826,6 +826,7 @@ function update_skill_costs() {
 // Skills with auto-purchased requirements are only deleted if the
 // deleted skill satisfies them.
 function recursively_delete_skills(deleted_skill_name) {
+	console.log("recursive_delete_skills(" + deleted_skill_name + ")");
 	var skill_deleted_last_round = true;
 	while (skill_deleted_last_round) {
 		skill_deleted_last_round = false;
@@ -840,7 +841,9 @@ function recursively_delete_skills(deleted_skill_name) {
 			if (is_at_least_one_prereq_not_met(
 					prereqs, deleted_skill_name, skill_count))
 			{
-				if (!prereqs instanceof Object) {
+				console.log("is_at_least_one_prereq_not_met() returned true");
+				if (prereqs instanceof Array) {
+					console.log("prereqs instanceof Array == true -> deleting");
 					// delete it
 					Notification.info("Removed skill " + skill_name,
 									window.current_action);
@@ -848,6 +851,7 @@ function recursively_delete_skills(deleted_skill_name) {
 					skill_deleted_last_round = true;
 					break;
 				} else {
+					console.log("prereqs instanceof Array == false -> decrementing");
 					// decrement it
 					recursively_decrement_skills(deleted_skill_name);
 				}
@@ -879,24 +883,35 @@ function recursively_delete_skills(deleted_skill_name) {
 // 2. If they require this skill, decrement them.
 // 3. Recurse
 function recursively_decrement_skills(decremented_skill_name) {
+	console.log("recursively_decrement_skills(" + decremented_skill_name + ")");
 	var skill_decremented_last_round = true;
 	while (skill_decremented_last_round) {
 		skill_decremented_last_round = false;
 		var skills = document.getElementById('skill_table').rows;
 		for (var r = 0; r < skills.length; r++) {
 			var skill_name = skills[r].cells[2].textContent;
-			if (is_this_numbered_prereq_not_met(
+			var skill_count = get_skill_count(skill_name);
+			var not_met = is_this_numbered_prereq_not_met(
 						hash['Skills'][skill_name]['Requires'],
 						decremented_skill_name,
-						get_skill_count(skill_name))) {
+						skill_count);
+			if (not_met) {
 				skill_decremented_last_round = true;
 				// Notification.info("Decremented skill " + skill_name,
 				// 		window.current_action);
-				while (is_this_numbered_prereq_not_met(
+				while (not_met) {
+					if (skill_count <= 1) {
+						delete_skill_by_name(skill_name);
+						not_met = false;
+						break;
+					} else {
+						add_skill(skill_name, -1);
+					}
+					skill_count = get_skill_count(skill_name);
+					not_met = is_this_numbered_prereq_not_met(
 						hash['Skills'][skill_name]['Requires'],
 						decremented_skill_name,
-						get_skill_count(skill_name))) {
-					add_skill(skill_name, -1);
+						skill_count);
 				}
 				recursively_decrement_skills(skill_name)
 			}
@@ -925,6 +940,7 @@ function clear_spell_tree(school) {
 // Determine if at least one prereq is no longer met
 // Called when deleting skills
 function is_at_least_one_prereq_not_met(prereqs, deleted_skill_name, skill_count) {
+	console.log("is_at_least_one_prereq_not_met(" + prereqs + "," + deleted_skill_name + "," + skill_count + ")");
 	if (prereqs == null) {
 		return false;
 	}
@@ -946,6 +962,7 @@ function is_at_least_one_prereq_not_met(prereqs, deleted_skill_name, skill_count
 }
 
 function is_this_numbered_prereq_not_met(prereqs, deleted_skill_name, my_count) {
+	console.log("is_this_numbered_prereq_not_met(" + prereqs + "," + deleted_skill_name + "," + my_count + ")");
 	if (prereqs instanceof Object) {
 		if (prereqs.hasOwnProperty(deleted_skill_name)) {
 			return (prereqs[deleted_skill_name] * my_count > get_skill_count(deleted_skill_name) );
@@ -956,6 +973,7 @@ function is_this_numbered_prereq_not_met(prereqs, deleted_skill_name, my_count) 
 
 // return true if the passed prereq is not met
 function is_prereq_not_met(prereq, deleted_skill_name) {
+	console.log("is_prereq_not_met(" + prereq + "," + deleted_skill_name + ")");
 	// This is not necessarily true:
 	// TODO
 	if (prereq == deleted_skill_name) {
