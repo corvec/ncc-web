@@ -1060,7 +1060,7 @@ function get_character_total_build() {
 
 function get_character_body() {
 	var body_data = hash["Classes"][get_character_class()];
-	return body_data["Base Body"] + get_character_level() * body_data["Body Per Level"];
+	return Math.floor(body_data["Base Body"] + get_character_level() * body_data["Body Per Level"]);
 }
 
 function get_max_armor() {
