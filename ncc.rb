@@ -1,6 +1,6 @@
 require 'yaml'
 
-# Used to generate ncc.html page, given YAML configuration.
+# Generates index.html and debug.html based on the contents of the YAML input file (line 40)
 
 def convert_to_js obj
 	if obj.is_a? Hash
@@ -11,6 +11,10 @@ def convert_to_js obj
 		return "\"#{obj}\""
 	elsif obj.is_a? Integer
 		return "#{obj}"
+	elsif obj.is_a? Float
+		return "#{obj}"
+	elsif obj == true
+		return "true"
 	else
 		puts "convert_to_js(#{obj}) - Type not recognized"
 		return obj.to_s
@@ -21,7 +25,7 @@ def array_to_js(array)
 	val = "["
 	array.each_with_index do |obj, i|
 		val += convert_to_js(obj)
-		val += ", " if i < array.size
+		val += ", " if i < array.size - 1
 	end
 	val += "]"
 
@@ -33,7 +37,7 @@ def hash_to_js(hash)
 	hash.keys.each_with_index do |key, i|
 		output += "\"#{key}\" : "
 		output += convert_to_js(hash[key])
-		output += ", " if i < hash.size
+		output += ", " if i < hash.size - 1
 	end
 	output += "}"
 	return output
@@ -47,7 +51,7 @@ File.open('ncc_data_2013racials.yml') { |filedata| yaml_skills = YAML.load(filed
 # 2. build javascript hash of skills object
 # 3. same thing with races
 
-page = <<-EORS
+page1 = <<-EORS
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,29 +83,26 @@ firstname dot lastname @ gmail dot com
 <script type="text/javascript" src="lib/noty/js/noty/themes/default.js"></script>
 <script type="text/javascript" src="lib/jspdf/jspdf.js"></script>
 <script type="text/javascript" src="lib/jspdf/libs/FileSaver.js/FileSaver.js"></script>
+EORS
+
+prod = <<-EORS
+<script type="text/javascript" src="ncc.min.js"></script>
+EORS
+
+test = <<-EORS
 <script type="text/javascript" src="ncc.js"></script>
+EORS
+
+page2 = <<-EORS
 <script type="text/javascript">
 	var hash = 
 EORS
 
-	page += convert_to_js(yaml_skills)
+page2 += convert_to_js(yaml_skills)
 
-page += <<-EORS
+page2 += <<-EORS
 ;
 
-$(function() {
-	window.current_school = "primary";
-	document.getElementById("spent_build").value = 0;
-	window.spell_add_mode = true;
-	window.grab_keys = true;
-	if(!navigator.userAgent.match(/iPhone/i) &&
-		!navigator.userAgent.match(/iPad/i))
-	{
-		$(document).keypress(function(e){ interpret_keycode(e); } );
-	} else if (navigator.userAgent.match(/iPhone/i)) {
-		$('h2').hide();
-	}
-});
 
 </script>
 
@@ -143,13 +144,13 @@ EORS
 
 yaml_skills["Races"].keys.each do |race|
 	if yaml_skills["Races"][race]["Default"]
-		page += "<option selected='true'>#{race}</option>\n"
+		page2 += "<option selected='true'>#{race}</option>\n"
 	elsif !yaml_skills["Races"][race]["Hidden"]
-		page += "<option>#{race}</option>\n"
+		page2 += "<option>#{race}</option>\n"
 	end
 end
 
-page += <<-EORS
+page2 += <<-EORS
 
 		</select>
 	</p>
@@ -274,11 +275,11 @@ EORS
 
 yaml_skills["Skills"].keys.each do |skill|
 	if yaml_skills["Skills"][skill].has_key?("Cost") or yaml_skills["Skills"][skill]["Racial"] == true
-		page += "<option>#{skill}</option>\n" 
+		page2 += "<option>#{skill}</option>\n" 
 	end
 end
 
-page += <<-EORS
+page2 += <<-EORS
 
 		</select>
 
@@ -333,7 +334,7 @@ removed += <<-EORS
 </div><!-- race_list -->
 EORS
 
-page += <<-EORS
+page2 += <<-EORS
 
 
 </div><!-- content -->
@@ -395,4 +396,11 @@ Corey's home chapter is <a href="http://www.neroindy.com" target="_in">NERO Indi
 </html>
 EORS
 
-File.open('index.html', 'w') { |file| file.write page }
+
+prod_full = page1 + prod + page2
+test_full = page1 + test + page2
+
+File.open('index.html', 'w') { |file| file.write prod_full }
+puts "index.html generated"
+File.open('debug.html', 'w') { |file| file.write test_full }
+puts "debug.html generated"

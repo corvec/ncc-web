@@ -2,3 +2,28 @@ NCC Web, or NERO Character Creator for the Web.
 
 This web app is designed to be usable from the web or from the desktop. 
 
+This application is released under the terms of the GNU General Public License, version 3.
+
+# Checking Out
+
+1. git clone git://github.com/corvec/ncc-web.git
+2. cd ncc-web
+3. git submodule init
+4. git submodule update
+
+# Project Structure
+
+## HTML and Ruby
+The ncc.rb file generates index.html and test.html. This is mainly so that the YAML data file can be parsed into JavaScript objects.
+
+## JavaScript
+ncc.min.js is a compiled JavaScript file generated manually.
+
+ncc-init.js contains initialization code.
+ncc-keys.js contains key-handling code.
+ncc-skills.js contains skill-purchasing code
+ncc-prereqs.js contains prereq handling code
+ncc-magic.js contains magic handling code - buying spells, switching schools, etc.
+ncc-export.js contains code for exporting to PDF, email, and saving the link
+ncc-info.js contains code used to get and set general info for the character
+
