@@ -93,6 +93,11 @@ test = <<-EORS
 <script type="text/javascript" src="ncc.js"></script>
 EORS
 
+git = <<-EORS
+<script type="text/javascript" src="https://raw.github.com/corvec/ncc-web/master/ncc.min.js"></script>
+EORS
+
+
 page2 = <<-EORS
 <script type="text/javascript">
 	var hash = 
@@ -399,8 +404,11 @@ EORS
 
 prod_full = page1 + prod + page2
 test_full = page1 + test + page2
+git_full = page1 + git + page2
 
 File.open('index.html', 'w') { |file| file.write prod_full }
 puts "index.html generated"
 File.open('debug.html', 'w') { |file| file.write test_full }
 puts "debug.html generated"
+File.open('git.html', 'w') { |file| file.write git_full }
+puts "git.html generated"

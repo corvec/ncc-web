@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="ncc.css" />
+<link rel="stylesheet" type="text/css" href="lib/ui-lightness/jquery-ui-1.8.22.custom.css" />
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes" /><!-- hide top bar in mobile safari-->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<title>NCC</title>
+<!--
+NERO Character Creator
+Web Edition
+Copyright 2012 by Corey T Kump
+
+Contact me at: 
+firstname dot lastname @ gmail dot com
+-->
+
+<script type="text/javascript" src="lib/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="lib/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="lib/autoresize.jquery.js"></script>
+<script type="text/javascript" src="lib/noty/js/noty/jquery.noty.js"></script>
+<script type="text/javascript" src="lib/noty/js/noty/layouts/top.js"></script>
+<script type="text/javascript" src="lib/noty/js/noty/layouts/topRight.js"></script>
+<script type="text/javascript" src="lib/noty/js/noty/themes/default.js"></script>
+<script type="text/javascript" src="lib/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="lib/jspdf/libs/FileSaver.js/FileSaver.js"></script>
+<script type="text/javascript" src="https://raw.github.com/corvec/ncc-web/master/ncc.min.js"></script>
+<script type="text/javascript">
+	var hash = 
+{"Races" : {"Barbarian" : {"Abilities" : ["Strong (Mighty Slay, Strong Arm, Rip From Binding)", "Wild (Detect Magic, Dispel Magic, Battle Rage)", "Racial Weapon: Two Handed Weapons"], "Include" : ["Two Handed Weapon Master"], "Half Cost for Skills" : ["Racial Mighty Slay", "Racial Strong Arm", "Racial Rip from Binding", "Racial Detect Magic", "Racial Dispel Magic", "Racial Battle Rage"]}, "Biata" : {"Abilities" : ["Willful (Resist Sleep, Resist Charm, Remove Fear)", "Telepathic (Awaken, Calm, Break Charm)", "Racial Feature: Mentalist"], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Awaken", "Racial Calm", "Racial Break Charm"]}, "Drae" : {"Abilities" : ["Fast (Light Touch, Dodge, Sneak Attack)", "Willful (Resist Sleep, Resist Charm, Remove Fear)", "Racial Weapon: Crossbows"], "Include" : ["Archery"], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Light Touch", "Racial Dodge", "Racial Sneak Attack"]}, "Dwarf" : {"Abilities" : ["Tough (Resist Poison, Resist Physical, Toughness)", "Tradesman (Merchant, Harvester, Grand Master)", "Racial Weapon: Hammers"], "Include" : ["One Handed Blunt", "Two Handed Blunt"], "Half Cost for Skills" : ["Racial Resist Poison", "Racial Resist Physical", "Racial Toughness", "Racial Merchant", "Racial Harvester", "Racial Grandmaster"]}, "Elf" : {"Abilities" : ["Fast (Light Touch, Dodge, Sneak Attack)", "Willful (Resist Sleep, Resist Charm, Remove Fear)", "Racial Weapon: Bow"], "Include" : ["Archery"], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Light Touch", "Racial Dodge", "Racial Sneak Attack"]}, "Gypsy" : {"Abilities" : ["Survivor (Detect Poison/Antidote, Will to Live, Ready Armor)", "Tradesman (Merchant, Harvester, Grand Master)", "Racial Feature: Gypsy Curse"], "Half Cost for Skills" : ["Racial Merchant", "Racial Harvester", "Racial Grandmaster", "Racial Detect Poison/Antidote", "Racial Will to Live", "Racial Ready Armor"]}, "Half Ogre" : {"Abilities" : ["Strong (Mighty Slay, Strong Arm, Rip From Binding)", "Tough (Resist Poison, Resist Physical, Toughness)", "Racial Weapon: Two-Handed Weapons"], "Include" : ["Two Handed Weapon Master"], "Half Cost for Skills" : ["Racial Mighty Slay", "Racial Strong Arm", "Racial Rip from Binding", "Racial Resist Poison", "Racial Resist Physical", "Racial Toughness"]}, "Half Orc" : {"Abilities" : ["Strong (Mighty Slay, Strong Arm, Rip From Binding)", "Wild (Detect Magic, Dispel Magic, Battle Rage)", "Racial Weapon: Axes"], "Include" : ["One Handed Edged", "Polearm"], "Half Cost for Skills" : ["Racial Mighty Slay", "Racial Strong Arm", "Racial Rip from Binding", "Racial Detect Magic", "Racial Dispel Magic", "Racial Battle Rage"]}, "Hobling" : {"Abilities" : ["Tough (Resist Poison, Resist Physical, Toughness)", "Fast (Light Touch, Dodge, Sneak Attack)", "Racial Weapon: Short Weapons"], "Include" : ["One Handed Weapon"], "Half Cost for Skills" : ["Racial Resist Poison", "Racial Resist Physical", "Racial Toughness", "Racial Light Touch", "Racial Dodge", "Racial Sneak Attack"]}, "Human" : {"Default" : true, "Super Race" : true, "Traits" : ["Strong", "Fast", "Tradesman", "Tough", "Wild", "Willful", "Telepathic", "Survivor"], "Abilities" : ["One of your choice", "Racial Feature: None"]}, "Strong Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Mighty Slay", "Racial Strong Arm", "Racial Rip from Binding"]}, "Fast Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Light Touch", "Racial Dodge", "Racial Sneak Attack"]}, "Tradesman Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Merchant", "Racial Harvester", "Racial Grandmaster"]}, "Tough Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Resist Poison", "Racial Resist Physical", "Racial Toughness"]}, "Wild Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Detect Magic", "Racial Dispel Magic", "Racial Battle Rage"]}, "Willful Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear"]}, "Telepathic Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Awaken", "Racial Calm", "Racial Break Charm"]}, "Survivor Human" : {"Hidden" : true, "Half Cost for Skills" : ["Racial Detect Poison/Antidote", "Racial Will to Live", "Racial Ready Armor"]}, "Mystic Wood Elf" : {"Abilities" : ["Willful (Resist Sleep, Resist Charm, Remove Fear)", "Tradesman (Merchant, Harvester, Grand Master)", "Racial Feature: Break Charm"], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Merchant", "Racial Harvester", "Racial Grandmaster"], "Prohibited Skills" : ["Racial Break Charm"]}, "Sarr" : {"Abilities" : ["Fast (Light Touch, Dodge, Sneak Attack)", "Survivor (Detect Poison/Antidote, Will to Live, Ready Armor)", "Racial Weapon - Base 2 Claws"], "Half Cost for Skills" : ["Racial Detect Poison/Antidote", "Racial Will to Live", "Racial Ready Armor", "Racial Light Touch", "Racial Dodge", "Racial Sneak Attack"]}, "Scavenger" : {"Abilities" : ["Survivor (Detect Poison/Antidote, Will to Live, Ready Armor)", "Tough (Resist Poison, Resist Physical, Toughness)", "Racial Weapon - Base 2 Claws"], "Half Cost for Skills" : ["Racial Detect Poison/Antidote", "Racial Will to Live", "Racial Ready Armor", "Racial Resist Poison", "Racial Resist Physical", "Racial Toughness"]}, "Stone Elf" : {"Abilities" : ["Telepathic (Awaken, Calm, Break Charm)", "Willful (Resist Sleep, Resist Charm, Remove Fear)", "Racial Feature: Mentalist"], "Half Cost for Skills" : ["Racial Resist Sleep", "Racial Resist Charm", "Racial Remove Fear", "Racial Awaken", "Racial Calm", "Racial Break Charm"]}, "Wild Elf" : {"Abilities" : ["Fast (Light Touch, Dodge, Sneak Attack)", "Wild (Detect Magic, Dispel Magic, Battle Rage)", "Racial Weapon: Bow"], "Include" : ["Archery"], "Half Cost for Skills" : ["Racial Light Touch", "Racial Dodge", "Racial Sneak Attack", "Racial Detect Magic", "Racial Dispel Magic", "Racial Battle Rage"]}}, "Classes" : {"Fighter" : {"Base Body" : 4, "Body Per Level" : 2}, "Rogue" : {"Base Body" : 3, "Body Per Level" : 1}, "Templar" : {"Base Body" : 3, "Body Per Level" : 1}, "Scholar" : {"Base Body" : 2.666667, "Body Per Level" : 0.666667}}, "Schools of Magic" : {"Earth" : {"Requires" : ["Healing Arts"]}, "Celestial" : {"Requires" : ["Read Magic"]}}, "Spell Costs" : {"Fighter" : [3, 3, 6, 6, 9, 9, 12, 12, 15], "Rogue" : [2, 2, 4, 4, 6, 6, 8, 8, 10], "Scholar" : [1, 1, 2, 2, 3, 3, 4, 4, 5], "Templar" : [1, 1, 2, 3, 3, 4, 5, 5, 6]}, "Skills" : {"Alchemy" : {"Types" : ["Craftsman"], "Requires" : ["Herbal Lore"], "Max" : 0, "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 4, "Templar" : 5}}, "Archery" : {"Cost" : {"Fighter" : 6, "Rogue" : 10, "Scholar" : 15, "Templar" : 12}, "Includes" : ["Weapon"]}, "Assassinate/Dodge" : {"Max" : 0, "Requires" : {"Backstab" : 2}, "Options" : ["Hand"], "Cost" : {"Fighter" : 20, "Rogue" : 10, "Scholar" : 20, "Templar" : 20}}, "Back Attack" : {"Max" : 4, "Requires" : ["Weapon"], "Options" : ["Hand"], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 6, "Templar" : 6}}, "Backstab" : {"Max" : 0, "Requires" : ["Weapon"], "Options" : ["Hand"], "Cost" : {"Fighter" : 30, "Rogue" : 15, "Scholar" : 30, "Templar" : 30}}, "Craftsman Other" : {"Types" : ["Craftsman"], "Max" : 0, "Options" : ["Type"], "Cost" : {"Fighter" : 3, "Rogue" : 3, "Scholar" : 3, "Templar" : 3}}, "Create Potion" : {"Max" : 0, "Types" : ["Craftsman"], "Requires" : ["Earth 4"], "Cost" : {"Fighter" : 6, "Rogue" : 5, "Scholar" : 3, "Templar" : 4}}, "Create Scroll" : {"Max" : 0, "Types" : ["Craftsman"], "Requires" : ["Celestial 4"], "Cost" : {"Fighter" : 6, "Rogue" : 5, "Scholar" : 3, "Templar" : 4}}, "Create Trap" : {"Types" : ["Craftsman"], "Max" : 0, "Requires" : ["Disarm/Arm Trap"], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 4, "Templar" : 5}}, "Critical Attack" : {"Max" : 4, "Requires" : ["Weapon"], "Options" : ["Hand", "Weapon"], "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 6, "Templar" : 3}}, "Critical Slay/Parry" : {"Max" : 0, "Requires" : {"Proficiency" : 2}, "Options" : ["Hand", "Weapon"], "Cost" : {"Fighter" : 10, "Rogue" : 15, "Scholar" : 20, "Templar" : 13}}, "Dexterity Armor" : {"Cost" : 3, "Max" : 10}, "Disarm/Arm Trap" : {"Types" : ["Craftsman"], "Cost" : {"Fighter" : 9, "Rogue" : 3, "Scholar" : 6, "Templar" : 9}}, "Evaluate Item" : {"Types" : ["Craftsman"], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 6, "Templar" : 6}}, "First Aid" : {"Types" : ["Craftsman"], "Cost" : {"Fighter" : 4, "Rogue" : 3, "Scholar" : 2, "Templar" : 2}}, "Florentine" : {"Requires" : ["Weapon"], "Cost" : {"Fighter" : 6, "Rogue" : 6, "Scholar" : 12, "Templar" : 8}}, "Formal Magic (Celestial)" : {"Max" : 0, "Requires" : ["Celestial 9"], "Cost" : {"Primary" : {"Fighter" : 12, "Rogue" : 8, "Scholar" : 4, "Templar" : 6}, "Secondary" : {"Fighter" : 24, "Rogue" : 18, "Scholar" : 8, "Templar" : 10}}}, "Formal Magic (Earth)" : {"Max" : 0, "Requires" : ["Earth 9"], "Cost" : {"Primary" : {"Fighter" : 12, "Rogue" : 8, "Scholar" : 4, "Templar" : 6}, "Secondary" : {"Fighter" : 24, "Rogue" : 18, "Scholar" : 8, "Templar" : 10}}}, "Healing Arts" : {"Types" : ["Craftsman"], "Requires" : ["First Aid", "Read and Write"], "Cost" : {"Fighter" : 4, "Rogue" : 3, "Scholar" : 2, "Templar" : 2}}, "Herbal Lore" : {"Types" : ["Craftsman"], "Requires" : ["Read and Write"], "Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 4, "Templar" : 5}}, "Manifold" : {"Requires" : ["Prepare Hearth"], "Cost" : {"Fighter" : 9, "Rogue" : 6, "Scholar" : 3, "Templar" : 4}}, "Master Critical Attack" : {"Max" : 4, "Requires" : ["Weapon"], "Options" : ["Hand"], "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 6, "Templar" : 4}}, "Master Critical Slay/Parry" : {"Max" : 0, "Requires" : {"Master Proficiency" : 2}, "Includes" : ["Critical Slay/Parry"], "Options" : ["Hand"], "Cost" : {"Fighter" : 13, "Rogue" : 18, "Scholar" : 25, "Templar" : 15}}, "Master Proficiency" : {"Max" : 0, "Requires" : ["Weapon"], "Options" : ["Hand"], "Includes" : ["Proficiency"], "Cost" : {"Fighter" : 17, "Rogue" : 24, "Scholar" : 34, "Templar" : 22}}, "One Handed Block" : {"Cost" : 0}, "One Handed Blunt" : {"Includes" : ["One Handed Weapon"], "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 8, "Templar" : 5}}, "One Handed Edged" : {"Includes" : ["One Handed Weapon"], "Cost" : {"Fighter" : 5, "Rogue" : 5, "Scholar" : 10, "Templar" : 7}}, "One Handed Weapon" : {"Includes" : ["Weapon"]}, "One Handed Weapon Master" : {"Includes" : ["One Handed Edged", "One Handed Blunt", "Small Weapon"], "Cost" : {"Fighter" : 8, "Rogue" : 9, "Scholar" : 14, "Templar" : 10}}, "Pick Locks" : {"Types" : ["Craftsman"], "Cost" : {"Fighter" : 9, "Rogue" : 3, "Scholar" : 9, "Templar" : 9}}, "Polearm" : {"Includes" : ["Two Handed Weapon"], "Cost" : {"Fighter" : 8, "Rogue" : 10, "Scholar" : 12, "Templar" : 10}}, "Prepare Hearth" : {"Requires" : ["Spell 1"], "Cost" : {"Fighter" : 6, "Rogue" : 4, "Scholar" : 2, "Templar" : 3}}, "Proficiency" : {"Requires" : ["Weapon"], "Max" : 0, "Options" : ["Hand", "Weapon"], "Cost" : {"Fighter" : 15, "Rogue" : 20, "Scholar" : 30, "Templar" : 18}}, "Racial Awaken" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4}}, "Racial Battle Rage" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4}}, "Racial Break Charm" : {"Cost" : {"Fighter" : 10, "Rogue" : 10, "Scholar" : 10, "Templar" : 10}}, "Racial Calm" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4}}, "Racial Detect Magic" : {"Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8}}, "Racial Detect Poison/Antidote" : {"Max" : 0, "Cost" : {"Fighter" : 6, "Rogue" : 6, "Scholar" : 6, "Templar" : 6}}, "Racial Dispel Magic" : {"Max" : 0, "Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8}}, "Racial Dodge" : {"Cost" : {"Fighter" : 24, "Rogue" : 24, "Scholar" : 24, "Templar" : 24}}, "Racial Grandmaster" : {"Cost" : {"Fighter" : 20, "Rogue" : 20, "Scholar" : 20, "Templar" : 20}}, "Racial Harvester" : {"Cost" : {"Fighter" : 10, "Rogue" : 10, "Scholar" : 10, "Templar" : 10}}, "Racial Light Touch" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4}}, "Racial Merchant" : {"Cost" : {"Fighter" : 10, "Rogue" : 10, "Scholar" : 10, "Templar" : 10}}, "Racial Mighty Slay" : {"Cost" : {"Fighter" : 20, "Rogue" : 20, "Scholar" : 20, "Templar" : 20}}, "Racial Ready Armor" : {"Max" : 0, "Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8}}, "Racial Remove Fear" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4}}, "Racial Resist Charm" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4}}, "Racial Resist Physical" : {"Cost" : {"Fighter" : 10, "Rogue" : 10, "Scholar" : 10, "Templar" : 10}}, "Racial Resist Poison" : {"Max" : 0, "Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8}}, "Racial Resist Sleep" : {"Max" : 0, "Cost" : {"Fighter" : 4, "Rogue" : 4, "Scholar" : 4, "Templar" : 4}}, "Racial Rip from Binding" : {"Max" : 0, "Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8}}, "Racial Sneak Attack" : {"Cost" : {"Fighter" : 16, "Rogue" : 16, "Scholar" : 16, "Templar" : 16}}, "Racial Strong Arm" : {"Cost" : {"Fighter" : 20, "Rogue" : 20, "Scholar" : 20, "Templar" : 20}}, "Racial Toughness" : {"Max" : 0, "Cost" : {"Fighter" : 8, "Rogue" : 8, "Scholar" : 8, "Templar" : 8}}, "Racial Will to Live" : {"Cost" : {"Fighter" : 20, "Rogue" : 20, "Scholar" : 20, "Templar" : 20}}, "Read and Write" : {"Types" : ["Scholarly", "Craftsman"], "Cost" : {"Fighter" : 6, "Rogue" : 6, "Scholar" : 3, "Templar" : 3}}, "Read Magic" : {"Types" : ["Scholarly", "Craftsman"], "Requires" : ["Read and Write"], "Cost" : {"Fighter" : 8, "Rogue" : 6, "Scholar" : 4, "Templar" : 4}}, "Shield" : {"Cost" : {"Fighter" : 5, "Rogue" : 10, "Scholar" : 15, "Templar" : 7}}, "Small Weapon" : {"Includes" : ["One Handed Weapon"], "Cost" : 2}, "Smithing" : {"Max" : 0, "Cost" : {"Fighter" : 3, "Rogue" : 4, "Scholar" : 4, "Templar" : 4}}, "Staff" : {"Includes" : ["Weapon"], "Cost" : 4}, "Stop Thrust" : {"Cost" : 2, "Max" : 0, "Requires" : {"Stop Thrust (Free)" : 0, "Proficiency" : 2}}, "Stop Thrust (Free)" : {"Cost" : 0, "Requires" : {"Two Handed Weapon" : 0}}, "Style Master" : {"Includes" : ["Florentine", "Two Weapons", "Shield"], "Cost" : {"Fighter" : 10, "Rogue" : 15, "Scholar" : 20, "Templar" : 15}}, "Thrown Weapon" : {"Includes" : ["Weapon"], "Cost" : 4}, "Two Handed Blunt" : {"Includes" : ["Two Handed Weapon"], "Cost" : {"Fighter" : 6, "Rogue" : 8, "Scholar" : 12, "Templar" : 8}}, "Two Handed Sword" : {"Includes" : ["Two Handed Weapon"], "Cost" : {"Fighter" : 8, "Rogue" : 12, "Scholar" : 16, "Templar" : 12}}, "Two Handed Weapon" : {"Includes" : ["Weapon"]}, "Two Handed Weapon Master" : {"Includes" : ["Polearm", "Two Handed Blunt", "Two Handed Sword", "Staff"], "Cost" : {"Fighter" : 12, "Rogue" : 14, "Scholar" : 18, "Templar" : 14}}, "Two Weapons" : {"Requires" : ["Florentine"], "Cost" : {"Fighter" : 2, "Rogue" : 4, "Scholar" : 4, "Templar" : 4}}, "Waylay" : {"Cost" : {"Fighter" : 6, "Rogue" : 3, "Scholar" : 6, "Templar" : 3}, "Max" : 0, "Requires" : {"One Handed Weapon" : 0, "Level" : 5}}, "Weapon Master" : {"Includes" : ["One Handed Weapon Master", "Two Handed Weapon Master"], "Cost" : {"Fighter" : 15, "Rogue" : 18, "Scholar" : 20, "Templar" : 18}}, "Wear Extra Armor" : {"Max" : {"Fighter" : 4, "Rogue" : 5, "Scholar" : 6, "Templar" : 5}, "Cost" : {"Fighter" : 3, "Rogue" : 3, "Scholar" : 4, "Templar" : 3}}}};
+
+
+</script>
+
+</head>
+
+<body>
+<div id="wrap">
+<div id="main">
+
+<div class="header">
+	<h1 class="title">NERO Character Creator</h1>
+</div>
+
+<div class="content">
+<h2 class="title">Character Info</h2>
+
+<div id="character_info" class="box-white">
+	<p>
+		<label for="player_name">Player</label>
+		<input type="text" id="player_name" value="" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
+	</p>
+	<p>
+		<label for="character_name">Character</label>
+		<input type="text" id="character_name" value="" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
+	</p>
+	<p>
+		<label for="character_class">Class</label>
+		<select id="character_class" onchange="change_class(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
+			<option value="Fighter">Fighter</option>
+			<option value="Rogue">Rogue</option>
+			<option value="Scholar">Scholar</option>
+			<option value="Templar">Templar</option>
+		</select>
+	</p>
+	<p>
+		<label for="race">Race</label>
+		<select id="race" onchange="change_race(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
+<option>Barbarian</option>
+<option>Biata</option>
+<option>Drae</option>
+<option>Dwarf</option>
+<option>Elf</option>
+<option>Gypsy</option>
+<option>Half Ogre</option>
+<option>Half Orc</option>
+<option>Hobling</option>
+<option selected='true'>Human</option>
+<option>Mystic Wood Elf</option>
+<option>Sarr</option>
+<option>Scavenger</option>
+<option>Stone Elf</option>
+<option>Wild Elf</option>
+
+		</select>
+	</p>
+	<p id="trait_p">
+		<label for="trait">Trait</label>
+		<select id="trait" onchange="change_trait(); window.grab_keys = false;" onfocus="window.grab_keys = false;" onblur="window.grab_keys = true;">
+			<option>Strong</option>
+			<option>Fast</option>
+			<option>Tradesman</option>
+			<option>Tough</option>
+			<option>Wild</option>
+			<option>Willful</option>
+			<option>Telepathic</option>
+			<option>Survivor</option>
+		</select>
+	</p>
+	<table id="abilities" onclick="$('#abilities_body').toggle();">
+		<thead><tr>
+			<th id="abilities_h">Racial Traits and Features</th>
+		</tr></thead>
+	
+		<tbody id="abilities_body">
+			<tr><td id="ability_0"></td></tr>
+			<tr><td id="ability_1"></td></tr>
+			<tr><td id="ability_2"></td></tr>
+		</tbody>
+		</table>
+	<p>
+		<label for="total_build">Build</label>
+		<input type="text" id="total_build" value="30" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
+	</p>
+	<p>
+		<label for="spent_build">Spent</label>
+		<input type="text" id="spent_build" value="0" readonly="readonly" />
+	</p>
+	<p id="print_btn_p">
+		<input type="submit" value="PDF" id="print_btn" onclick="return generate_pdf()" />
+		<input type="submit" value="Email" id="email_btn" onclick="return mail_character()" />
+		<input type="submit" value="Save" id="save_btn" onclick="return save_link()" />
+		<a href="#" style="display: none;" id="a_email" onclick="$('#a_email').hide()">Click to Send Email</a>
+		<a href="#" style="display: none;" id="a_save" onclick="$('#a_save').hide()">Save This Link</a>
+	</p>
+
+</div><!-- character_info -->
+
+<h2 class="title">Spells</h2>
+<table class="spell_tree">
+	<thead>
+	<tr></tr>
+	<tr>
+		<th class="spell_school" rowspan="2" onclick="switch_schools()">
+			Primary
+		</th>
+		<th class="spell_level" onclick='del_spell("p_1")'>1</th>
+		<th class="spell_level" onclick='del_spell("p_2")'>2</th>
+		<th class="spell_level" onclick='del_spell("p_3")'>3</th>
+		<th class="spell_level" onclick='del_spell("p_4")'>4</th>
+		<th class="spell_level" onclick='del_spell("p_5")'>5</th>
+		<th class="spell_level" onclick='del_spell("p_6")'>6</th>
+		<th class="spell_level" onclick='del_spell("p_7")'>7</th>
+		<th class="spell_level" onclick='del_spell("p_8")'>8</th>
+		<th class="spell_level" onclick='del_spell("p_9")'>9</th>
+		<th class="spell_head">Cost</th>
+	</tr></thead>
+	<tbody>
+	<tr>
+		<td class="spell_school" onclick="switch_schools()" id="primary">Earth</td>
+		<td class="spell_slot" onclick='add_spell("p_1")'><span id="p_1">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_2")'><span id="p_2">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_3")'><span id="p_3">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_4")'><span id="p_4">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_5")'><span id="p_5">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_6")'><span id="p_6">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_7")'><span id="p_7">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_8")'><span id="p_8">0</span></td>
+		<td class="spell_slot" onclick='add_spell("p_9")'><span id="p_9">0</span></td>
+		<td class="spell_cost"><span id="p_cost">0</span></td>
+	</tr>
+	</tbody>
+</table>
+
+<table class="spell_tree">
+	<thead>
+	<tr>
+		<th class="spell_school" onclick="switch_schools()">Secondary</th>
+		<th class="spell_level" onclick='del_spell("s_1")'>1</th>
+		<th class="spell_level" onclick='del_spell("s_2")'>2</th>
+		<th class="spell_level" onclick='del_spell("s_3")'>3</th>
+		<th class="spell_level" onclick='del_spell("s_4")'>4</th>
+		<th class="spell_level" onclick='del_spell("s_5")'>5</th>
+		<th class="spell_level" onclick='del_spell("s_6")'>6</th>
+		<th class="spell_level" onclick='del_spell("s_7")'>7</th>
+		<th class="spell_level" onclick='del_spell("s_8")'>8</th>
+		<th class="spell_level" onclick='del_spell("s_9")'>9</th>
+		<th class="spell_head">Cost</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="spell_school" onclick="switch_schools()" id="secondary">Celestial</td>
+		<td class="spell_slot" onclick='add_spell("s_1")'><span id="s_1">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_2")'><span id="s_2">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_3")'><span id="s_3">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_4")'><span id="s_4">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_5")'><span id="s_5">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_6")'><span id="s_6">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_7")'><span id="s_7">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_8")'><span id="s_8">0</span></td>
+		<td class="spell_slot" onclick='add_spell("s_9")'><span id="s_9">0</span></td>
+		<td class="spell_cost"><span id="s_cost">0</span></td >
+	</tr>
+	</tbody>
+</table>
+
+<h2 class="title">Skills</h2>
+<div id="add_skills" class="box-white">
+	<form onsubmit="return add_selected_skill()">
+	<p id="add_skill_row">
+		<input type="number" id="skill_number" value="1" onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;" />
+		<select id="skill_to_add" onchange="update_skill_cost();" onfocus="window.grab_keys=false;" onblur="window.grab_keys=true;" onkeyup="if (event.keyCode == 13) document.getElementById('skill_add_btn').click();">
+<option>Alchemy</option>
+<option>Archery</option>
+<option>Assassinate/Dodge</option>
+<option>Back Attack</option>
+<option>Backstab</option>
+<option>Craftsman Other</option>
+<option>Create Potion</option>
+<option>Create Scroll</option>
+<option>Create Trap</option>
+<option>Critical Attack</option>
+<option>Critical Slay/Parry</option>
+<option>Dexterity Armor</option>
+<option>Disarm/Arm Trap</option>
+<option>Evaluate Item</option>
+<option>First Aid</option>
+<option>Florentine</option>
+<option>Formal Magic (Celestial)</option>
+<option>Formal Magic (Earth)</option>
+<option>Healing Arts</option>
+<option>Herbal Lore</option>
+<option>Manifold</option>
+<option>Master Critical Attack</option>
+<option>Master Critical Slay/Parry</option>
+<option>Master Proficiency</option>
+<option>One Handed Block</option>
+<option>One Handed Blunt</option>
+<option>One Handed Edged</option>
+<option>One Handed Weapon Master</option>
+<option>Pick Locks</option>
+<option>Polearm</option>
+<option>Prepare Hearth</option>
+<option>Proficiency</option>
+<option>Racial Awaken</option>
+<option>Racial Battle Rage</option>
+<option>Racial Break Charm</option>
+<option>Racial Calm</option>
+<option>Racial Detect Magic</option>
+<option>Racial Detect Poison/Antidote</option>
+<option>Racial Dispel Magic</option>
+<option>Racial Dodge</option>
+<option>Racial Grandmaster</option>
+<option>Racial Harvester</option>
+<option>Racial Light Touch</option>
+<option>Racial Merchant</option>
+<option>Racial Mighty Slay</option>
+<option>Racial Ready Armor</option>
+<option>Racial Remove Fear</option>
+<option>Racial Resist Charm</option>
+<option>Racial Resist Physical</option>
+<option>Racial Resist Poison</option>
+<option>Racial Resist Sleep</option>
+<option>Racial Rip from Binding</option>
+<option>Racial Sneak Attack</option>
+<option>Racial Strong Arm</option>
+<option>Racial Toughness</option>
+<option>Racial Will to Live</option>
+<option>Read and Write</option>
+<option>Read Magic</option>
+<option>Shield</option>
+<option>Small Weapon</option>
+<option>Smithing</option>
+<option>Staff</option>
+<option>Stop Thrust</option>
+<option>Stop Thrust (Free)</option>
+<option>Style Master</option>
+<option>Thrown Weapon</option>
+<option>Two Handed Blunt</option>
+<option>Two Handed Sword</option>
+<option>Two Handed Weapon Master</option>
+<option>Two Weapons</option>
+<option>Waylay</option>
+<option>Weapon Master</option>
+<option>Wear Extra Armor</option>
+
+		</select>
+
+	</p>
+	<p>
+		<input type="text" readonly="readonly" value="0" id="skill_cost" />
+		<input type="submit" value="Add Skill" id="skill_add_btn" />
+	</p>
+	</form>
+</div><!-- add_skills -->
+
+<table>
+	<thead><tr>
+		<th></th>
+		<th>Count</th>
+		<th>Skill Name</th>
+		<th>Build</th>
+	</tr></thead>
+	<tbody id="skill_table"></tbody>
+</table>
+
+<div class="box-white">
+	<p><textarea id="notes" placeholder="Notes..." onfocus="window.grab_keys=false;" onblur="window.grab_keys = true;"></textarea></p>
+	<!--
+		<p><label for="notes1">Notes:</label><input type="text" id="notes1" /></p>
+	-->
+</div>
+
+
+
+
+</div><!-- content -->
+</div><!-- main -->
+<div id="sidebar">
+<div class="header">
+<h1 class="title">Keyboard Mapping</h1>
+</div><!-- header -->
+<div class="content">
+<table>
+	<ul class="nav">
+		<li><a href='#' onclick='run_action("A")'>
+			<span class="ico msg" style="text-align: center;">A</span>
+			<span>Selects the "Add Skill" drop-down.</span>
+		</a></li>
+		<li><a>
+			<span class="ico msg" style="text-align: center;">1-9</span>
+			<span>Adds/removes a spell by level</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("=")'>
+			<span class="ico msg" style="text-align: center;">=</span>
+			<span>Toggles Spell Add Mode on/off</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("+")'>
+			<span class="ico msg" style="text-align: center;">+</span>
+			<span>Sets Spell Add Mode on</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("-")'>
+			<span class="ico msg" style="text-align: center;">-</span>
+			<span>Sets Spell Add Mode off</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("P")'>
+			<span class="ico msg" style="text-align: center;">P</span>
+			<span>Toggles the primary school</span>
+		</a></li>
+		<li><a href='#' onclick='run_action("S")'>
+			<span class="ico msg" style="text-align: center;">S</span>
+			<span>Toggles the selected school</span>
+		</a></li>
+		
+	</ul>
+</table>
+<div class="box-white" id="credits">
+<p>This web app was developed by Corey Kump in 2012.
+It utilizes skills from the <a href="http://www.nerolarp.com" target="_nat">NERO LARP</a> game.
+Corey's home chapter is <a href="http://www.neroindy.com" target="_in">NERO Indiana</a>.
+</p>
+<p>This application is released under the terms of the <a href="http://www.gnu.org/licenses">GNU General Public License</a>, version 3 and its code is available on <a href="http://www.github.com/corvec/ncc-web">gitHub</a></p>
+<p>A desktop version of this app is also maintained on <a href="http://www.github.com/corvec/NERO-Character-Creator" target="_git">gitHub</a>.</p>
+<p>Follow the author on <a href="twitter.com/corvectkump" target="_twt">Twitter</a>, <a href="http://www.github.com/corvec" target="_git">GitHub</a>, or visit his site and blog at <a href="http://coreykump.com" target="_site">coreykump.com</a>.</p>
+</div><!--credits-->
+
+
+</div><!--content-->
+</div><!--sidebar-->
+
+</div><!-- wrap -->
+</body>
+</html>
