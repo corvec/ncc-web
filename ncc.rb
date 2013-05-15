@@ -68,7 +68,7 @@ page1 = <<-EORS
 <!--
 NERO Character Creator
 Web Edition
-Copyright 2012 by Corey T Kump
+Copyright 2012-2013 by Corey T Kump
 
 Contact me at: 
 firstname dot lastname @ gmail dot com
