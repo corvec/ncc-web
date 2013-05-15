@@ -79,5 +79,5 @@ In a command prompt, navigate to the folder where you store git repos (for this 
 
 ## The Author
 
-The author of this application is Corey T Kump.
-Follow him on Twitter: @CorvecTKump
+The author of this application is [Corey T Kump](http://www.coreykump.com).
+Follow him on Twitter: [@CorvecTKump](http://www.twitter.com/CorvecTKump)
