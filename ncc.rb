@@ -381,8 +381,9 @@ page += <<-EORS
 It utilizes skills from the <a href="http://www.nerolarp.com" target="_nat">NERO LARP</a> game.
 Corey's home chapter is <a href="http://www.neroindy.com" target="_in">NERO Indiana</a>.
 </p>
-<p>A desktop version of this app is maintained on <a href="http://www.github.com/corvec/NERO-Character-Creator" target="_git">gitHub</a>.</p>
-<p>This application is released under the terms of the <a href="http://www.gnu.org/licenses">GNU General Public License</a>, version 3.</p>
+<p>This application is released under the terms of the <a href="http://www.gnu.org/licenses">GNU General Public License</a>, version 3 and its code is available on <a href="http://www.github.com/corvec/ncc-web">gitHub</a></p>
+<p>A desktop version of this app is also maintained on <a href="http://www.github.com/corvec/NERO-Character-Creator" target="_git">gitHub</a>.</p>
+<p>Follow the author on <a href="twitter.com/corvectkump" target="_twt">Twitter</a>, <a href="http://www.github.com/corvec" target="_git">GitHub</a>, or visit his site and blog at <a href="http://coreykump.com" target="_site">coreykump.com</a>.</p>
 </div><!--credits-->
 
 
