@@ -5,7 +5,6 @@
  *
  * This file is used for testing purposes.
  * In production, ncc.min.js should be used instead.
- * ncc.min.js is currently generated manually.
  *
  * Copyright 2012-2013 Corey T Kump
  * August 30, 2012 - May 15, 2013

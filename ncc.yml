@@ -1,123 +1,255 @@
 Races:
     Barbarian:
-        Starting Body: 2
-        Double Cost for Skills:
-            - Read and Write
-            - Read Magic
-        Racial Skills:
-            Detect Celestial Magic: 2
-            Barbarian Slay: 10
+        Abilities:
+            - Strong (Mighty Slay, Strong Arm, Rip From Binding)
+            - Wild (Detect Magic, Dispel Magic, Battle Rage)
+            - "Racial Weapon: Two Handed Weapons"
+        Include:
+            - Two Handed Weapon Master
+        Half Cost for Skills:
+            - Racial Mighty Slay
+            - Racial Strong Arm
+            - Racial Rip from Binding
+            - Racial Detect Magic
+            - Racial Dispel Magic
+            - Racial Battle Rage
     Biata:
-        Prohibited Skills:
-            - Read Magic
-        Racial Skills:
-            Break Charm: 2
-            Resist Charm: 3
-            Resist Sleep: 2
+        Abilities:
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
+            - Telepathic (Awaken, Calm, Break Charm)
+            - "Racial Feature: Mentalist"
+        Half Cost for Skills:
+            - Racial Resist Sleep
+            - Racial Resist Charm
+            - Racial Remove Fear
+            - Racial Awaken
+            - Racial Calm
+            - Racial Break Charm
     Drae:
         Abilities:
-            - "-2 Body between 6 AM and 6 PM"
-        Half Cost for Skills:
+            - Fast (Light Touch, Dodge, Sneak Attack)
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
+            - "Racial Weapon: Crossbows"
+        Include:
             - Archery
-        Prohibited Skills:
-            - Two Handed Blunt
-            - Two Handed Sword
-        Racial Skills:
-            Resist Charm: 3
-            Resist Sleep: 2
+        Half Cost for Skills:
+            - Racial Resist Sleep
+            - Racial Resist Charm
+            - Racial Remove Fear
+            - Racial Light Touch
+            - Racial Dodge
+            - Racial Sneak Attack
     Dwarf:
-        Racial Skills:
-            Resist Poison: 4
-        Starting Body: 1
-        Reduced Cost for Skills:
-            - Smithing
-        Prohibited Skills:
-            - Staff
-            - Two Handed Blunt
-            - Two Handed Sword
-            - Polearm
-            - Two Handed Weapon Master
-            - Weapon Master
-        Double Cost for Skills:
-            - Read Magic
-    Elf:
-        Starting Body: -1
-        Half Cost for Skills:
-            - Archery
-        Racial Skills:
-            Resist Charm: 3
-            Resist Sleep: 2
-        Prohibited Skills:
-            - Two Handed Blunt
-            - Two Handed Sword
-    Gypsy:
-        Racial Skills:
-            "Gypsy Curse/Remove Gypsy Curse": 2
-    Half Ogre:
-        Starting Body: 2
-        Double Cost for Skills:
-            - Read and Write
-            - Read Magic
-        Racial Skills:
-            Strong Arm: 10
-    Half Orc:
-        Starting Body: 2
-        Double Cost for Skills:
-            - Read and Write
-            - Read Magic
-        Racial Skills:
-            Strong Arm: 10
-    Hobling:
-        Starting Body: -1
-        Racial Skills:
-            Resist Poison: 4
-            Hobling Dodge: 12
-        Prohibited Skills:
-            - Archery
-            - Staff
-            - Two Handed Blunt
-            - Two Handed Sword
-            - Polearm
-            - Two Handed Weapon Master
-            - Weapon Master
-        Prohibited Classes:
-            - Fighter
-        Default Class: Rogue
-        Half Cost for Skills:
-            - Pick Locks
-            - "Disarm/Arm Trap"
-    Human:
-        Default: true
-    Mystic Wood Elf:
         Abilities:
-            - "Must purchase one craftsman skill per level"
-        Racial Skills:
-            Break Charm: 2
-            Resist Charm: 3
-        Reduced Cost for Skills:
-            - Craftsman Other
-        Level Requirements:
-            - Craftsman
-    Sarr:
-        Abilities:
-            - Scenting
-        Racial Skills:
-            Resist Poison: 4
-        Prohibited Skills:
+            - Tough (Resist Poison, Resist Physical, Toughness)
+            - Tradesman (Merchant, Harvester, Grand Master)
+            - "Racial Weapon: Hammers"
+        Include:
             - One Handed Blunt
             - Two Handed Blunt
-            - Staff
+        Half Cost for Skills:
+            - Racial Resist Poison
+            - Racial Resist Physical
+            - Racial Toughness
+            - Racial Merchant
+            - Racial Harvester
+            - Racial Grandmaster
+    Elf:
+        Abilities:
+            - Fast (Light Touch, Dodge, Sneak Attack)
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
+            - "Racial Weapon: Bow"
+        Include:
             - Archery
-            - Thrown Weapon
-            - One Handed Weapon Master
+        Half Cost for Skills:
+            - Racial Resist Sleep
+            - Racial Resist Charm
+            - Racial Remove Fear
+            - Racial Light Touch
+            - Racial Dodge
+            - Racial Sneak Attack
+    Gypsy:
+        Abilities:
+            - Survivor (Detect Poison/Antidote, Will to Live, Ready Armor)
+            - Tradesman (Merchant, Harvester, Grand Master)
+            - "Racial Feature: Gypsy Curse"
+        Half Cost for Skills:
+            - Racial Merchant
+            - Racial Harvester
+            - Racial Grandmaster
+            - Racial Detect Poison/Antidote
+            - Racial Will to Live
+            - Racial Ready Armor
+    Half Ogre:
+        Abilities:
+            - Strong (Mighty Slay, Strong Arm, Rip From Binding)
+            - Tough (Resist Poison, Resist Physical, Toughness)
+            - "Racial Weapon: Two-Handed Weapons"
+        Include:
+            - Two Handed Weapon Master
+        Half Cost for Skills:
+            - Racial Mighty Slay
+            - Racial Strong Arm
+            - Racial Rip from Binding
+            - Racial Resist Poison
+            - Racial Resist Physical
+            - Racial Toughness
+    Half Orc:
+        Abilities:
+            - Strong (Mighty Slay, Strong Arm, Rip From Binding)
+            - Wild (Detect Magic, Dispel Magic, Battle Rage)
+            - "Racial Weapon: Axes"
+        Include:
+            - One Handed Edged
+            - Polearm
+        Half Cost for Skills:
+            - Racial Mighty Slay
+            - Racial Strong Arm
+            - Racial Rip from Binding
+            - Racial Detect Magic
+            - Racial Dispel Magic
+            - Racial Battle Rage
+    Hobling:
+        Abilities:
+            - Tough (Resist Poison, Resist Physical, Toughness)
+            - Fast (Light Touch, Dodge, Sneak Attack)
+            - "Racial Weapon: Short Weapons"
+        Include:
+            - One Handed Weapon
+        Half Cost for Skills:
+            - Racial Resist Poison
+            - Racial Resist Physical
+            - Racial Toughness
+            - Racial Light Touch
+            - Racial Dodge
+            - Racial Sneak Attack
+    Human:
+        Default: true
+        Super Race: true
+        Traits:
+            - Strong
+            - Fast
+            - Tradesman
+            - Tough
+            - Wild
+            - Willful
+            - Telepathic
+            - Survivor
+        Abilities:
+            - One of your choice
+            - "Racial Feature: None"
+    Strong Human:
+        Hidden: true
+        Half Cost for Skills:
+            - Racial Mighty Slay
+            - Racial Strong Arm
+            - Racial Rip from Binding
+    Fast Human:
+        Hidden: true
+        Half Cost for Skills:
+            - Racial Light Touch
+            - Racial Dodge
+            - Racial Sneak Attack
+    Tradesman Human:
+        Hidden: true
+        Half Cost for Skills:
+            - Racial Merchant
+            - Racial Harvester
+            - Racial Grandmaster
+    Tough Human:
+        Hidden: true
+        Half Cost for Skills:
+            - Racial Resist Poison
+            - Racial Resist Physical
+            - Racial Toughness
+    Wild Human:
+        Hidden: true
+        Half Cost for Skills:
+            - Racial Detect Magic
+            - Racial Dispel Magic
+            - Racial Battle Rage
+    Willful Human:
+        Hidden: true
+        Half Cost for Skills:
+            - Racial Resist Sleep
+            - Racial Resist Charm
+            - Racial Remove Fear
+    Telepathic Human:
+        Hidden: true
+        Half Cost for Skills:
+            - Racial Awaken
+            - Racial Calm
+            - Racial Break Charm
+    Survivor Human:
+        Hidden: true
+        Half Cost for Skills:
+            - Racial Detect Poison/Antidote
+            - Racial Will to Live
+            - Racial Ready Armor
+    Mystic Wood Elf:
+        Abilities:
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
+            - Tradesman (Merchant, Harvester, Grand Master)
+            - "Racial Feature: Break Charm"
+        Half Cost for Skills:
+            - Racial Resist Sleep
+            - Racial Resist Charm
+            - Racial Remove Fear
+            - Racial Merchant
+            - Racial Harvester
+            - Racial Grandmaster
+        Prohibited Skills:
+            - Racial Break Charm
+    Sarr:
+        Abilities:
+            - Fast (Light Touch, Dodge, Sneak Attack)
+            - Survivor (Detect Poison/Antidote, Will to Live, Ready Armor)
+            - "Racial Weapon - Base 2 Claws"
+        Half Cost for Skills:
+            - Racial Detect Poison/Antidote
+            - Racial Will to Live
+            - Racial Ready Armor
+            - Racial Light Touch
+            - Racial Dodge
+            - Racial Sneak Attack
     Scavenger:
         Abilities:
-            - Scenting
-        Racial Skills:
-            Resist Poison: 4
-        Double Cost for Skills:
-            - Read and Write
-            - Read Magic
+            - Survivor (Detect Poison/Antidote, Will to Live, Ready Armor)
+            - Tough (Resist Poison, Resist Physical, Toughness)
+            - "Racial Weapon - Base 2 Claws"
+        Half Cost for Skills:
+            - Racial Detect Poison/Antidote
+            - Racial Will to Live
+            - Racial Ready Armor
+            - Racial Resist Poison
+            - Racial Resist Physical
+            - Racial Toughness
+    Stone Elf:
+        Abilities:
+            - Telepathic (Awaken, Calm, Break Charm)
+            - Willful (Resist Sleep, Resist Charm, Remove Fear)
+            - "Racial Feature: Mentalist"
+        Half Cost for Skills:
+            - Racial Resist Sleep
+            - Racial Resist Charm
+            - Racial Remove Fear
+            - Racial Awaken
+            - Racial Calm
+            - Racial Break Charm
+    Wild Elf:
+        Abilities:
+            - Fast (Light Touch, Dodge, Sneak Attack)
+            - Wild (Detect Magic, Dispel Magic, Battle Rage)
+            - "Racial Weapon: Bow"
+        Include:
+            - Archery
+        Half Cost for Skills:
+            - Racial Light Touch
+            - Racial Dodge
+            - Racial Sneak Attack
+            - Racial Detect Magic
+            - Racial Dispel Magic
+            - Racial Battle Rage
 Classes:
     Fighter:
         Base Body: 4
@@ -198,11 +330,6 @@ Skills:
             Rogue: 15
             Scholar: 30
             Templar: 30
-    Barbarian Slay:
-        Racial: true
-    Break Charm:
-        Racial: true
-        Max: 0
     Craftsman Other:
         Types:
             - Craftsman
@@ -271,9 +398,6 @@ Skills:
             Rogue: 15
             Scholar: 20
             Templar: 13
-    Detect Celestial Magic:
-        Racial: true
-        Max: 0
     Dexterity Armor:
         Cost: 3
         Max: 10
@@ -339,9 +463,6 @@ Skills:
                 Rogue: 18
                 Scholar: 8
                 Templar: 10
-    "Gypsy Curse/Remove Gypsy Curse":
-        Racial: true
-        Max: 0
     Healing Arts:
         Types:
             - Craftsman
@@ -363,8 +484,6 @@ Skills:
             Rogue: 3
             Scholar: 4
             Templar: 5
-    Hobling Dodge: 
-        Racial: true
     Manifold:
         Requires:
             - Prepare Hearth
@@ -477,6 +596,163 @@ Skills:
             Rogue: 20
             Scholar: 30
             Templar: 18
+    Racial Awaken:
+        Max: 0
+        Cost:
+            Fighter: 4
+            Rogue: 4
+            Scholar: 4
+            Templar: 4
+    Racial Battle Rage:
+        Max: 0
+        Cost:
+            Fighter: 4
+            Rogue: 4
+            Scholar: 4
+            Templar: 4
+    Racial Break Charm:
+        Cost:
+            Fighter: 10
+            Rogue: 10
+            Scholar: 10
+            Templar: 10
+    Racial Calm:
+        Max: 0
+        Cost:
+            Fighter: 4
+            Rogue: 4
+            Scholar: 4
+            Templar: 4
+    Racial Detect Magic:
+        Cost:
+            Fighter: 8
+            Rogue: 8
+            Scholar: 8
+            Templar: 8
+    Racial Detect Poison/Antidote:
+        Max: 0
+        Cost:
+            Fighter: 6
+            Rogue: 6
+            Scholar: 6
+            Templar: 6
+    Racial Dispel Magic:
+        Max: 0
+        Cost:
+            Fighter: 8
+            Rogue: 8
+            Scholar: 8
+            Templar: 8
+    Racial Dodge:
+        Cost:
+            Fighter: 24
+            Rogue: 24
+            Scholar: 24
+            Templar: 24
+    Racial Grandmaster:
+        Cost:
+            Fighter: 20
+            Rogue: 20
+            Scholar: 20
+            Templar: 20
+    Racial Harvester:
+        Cost:
+            Fighter: 10
+            Rogue: 10
+            Scholar: 10
+            Templar: 10
+    Racial Light Touch:
+        Max: 0
+        Cost:
+            Fighter: 4
+            Rogue: 4
+            Scholar: 4
+            Templar: 4
+    Racial Merchant:
+        Cost:
+            Fighter: 10
+            Rogue: 10
+            Scholar: 10
+            Templar: 10
+    Racial Mighty Slay:
+        Cost:
+            Fighter: 20
+            Rogue: 20
+            Scholar: 20
+            Templar: 20
+    Racial Ready Armor:
+        Max: 0
+        Cost:
+            Fighter: 8
+            Rogue: 8
+            Scholar: 8
+            Templar: 8
+    Racial Remove Fear:
+        Max: 0
+        Cost:
+            Fighter: 4
+            Rogue: 4
+            Scholar: 4
+            Templar: 4
+    Racial Resist Charm:
+        Max: 0
+        Cost:
+            Fighter: 4
+            Rogue: 4
+            Scholar: 4
+            Templar: 4
+    Racial Resist Physical:
+        Cost:
+            Fighter: 10
+            Rogue: 10
+            Scholar: 10
+            Templar: 10
+    Racial Resist Poison:
+        Max: 0
+        Cost:
+            Fighter: 8
+            Rogue: 8
+            Scholar: 8
+            Templar: 8
+    Racial Resist Sleep:
+        Max: 0
+        Cost:
+            Fighter: 4
+            Rogue: 4
+            Scholar: 4
+            Templar: 4
+    Racial Rip from Binding:
+        Max: 0
+        Cost:
+            Fighter: 8
+            Rogue: 8
+            Scholar: 8
+            Templar: 8
+    Racial Sneak Attack:
+        Cost:
+            Fighter: 16
+            Rogue: 16
+            Scholar: 16
+            Templar: 16
+    Racial Strong Arm:
+        Cost:
+            Fighter: 20
+            Rogue: 20
+            Scholar: 20
+            Templar: 20
+    Racial Toughness:
+        Max: 0
+        Cost:
+            Fighter: 8
+            Rogue: 8
+            Scholar: 8
+            Templar: 8
+    Racial Will to Live:
+        Cost:
+            Fighter: 20
+            Rogue: 20
+            Scholar: 20
+            Templar: 20
     Read and Write:
         Types:
             - Scholarly
@@ -497,15 +773,6 @@ Skills:
             Rogue: 6
             Scholar: 4
             Templar: 4
-    Resist Charm:
-        Max: 0
-        Racial: true
-    Resist Poison:
-        Max: 0
-        Racial: true
-    Resist Sleep:
-        Max: 0
-        Racial: true
     Shield:
         Cost:
             Fighter: 5
@@ -531,10 +798,12 @@ Skills:
         Cost: 2
         Max: 0
         Requires:
-            Two Handed Weapon: 0
+            Stop Thrust (Free): 0
             Proficiency: 2
-    Strong Arm:
-        Racial: true
+    Stop Thrust (Free):
+        Cost: 0
+        Requires:
+            Two Handed Weapon: 0
     Style Master:
         Includes:
             - Florentine

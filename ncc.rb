@@ -45,7 +45,7 @@ end
 
 
 yaml_skills = {}
-File.open('ncc_data_2013racials.yml') { |filedata| yaml_skills = YAML.load(filedata) }
+File.open('ncc.yml') { |filedata| yaml_skills = YAML.load(filedata) }
 
 # 1. import skill file into skills object
 # 2. build javascript hash of skills object
@@ -94,7 +94,7 @@ test = <<-EORS
 EORS
 
 git = <<-EORS
-<script type="text/javascript" src="https://raw.github.com/corvec/ncc-web/master/ncc.min.js"></script>
+<script type="text/javascript" src="https://raw.github.com/corvec/ncc-web/master/ncc.js"></script>
 EORS
 
 
